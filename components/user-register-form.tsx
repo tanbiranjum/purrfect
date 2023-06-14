@@ -1,13 +1,15 @@
+"use client"
+
 import React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
 import { z } from "zod"
 
 import { userAuthSchema } from "@/lib/validations/auth"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,6 +31,7 @@ const UserRegisterForm = () => {
   function onSubmit(values: z.infer<typeof userAuthSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    toast.success("Registration completed!")
     console.log(values)
   }
 
