@@ -2,6 +2,7 @@
 
 import React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
@@ -23,6 +24,7 @@ const UserRegisterForm = () => {
   const form = useForm<z.infer<typeof userAuthSchema>>({
     resolver: zodResolver(userAuthSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -31,13 +33,35 @@ const UserRegisterForm = () => {
   function onSubmit(values: z.infer<typeof userAuthSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    toast.success("Registration completed!")
+
+    axios
+      .post("/api/register", values)
+      .then(() => {
+        toast.success("Registration completed!")
+      })
+      .catch(() => {
+        toast.error("Something went wrong!")
+      })
+
     console.log(values)
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="John Doe" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
