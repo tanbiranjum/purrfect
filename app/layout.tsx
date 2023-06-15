@@ -9,6 +9,8 @@ import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
+import getCurrentUser from "./actions/get-current-user"
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -30,7 +32,8 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const currentUser = await getCurrentUser()
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -43,7 +46,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
+              <SiteHeader currentUser={currentUser}/>
               <div className="flex-1">{children}</div>
             </div>
             <TailwindIndicator />

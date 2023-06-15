@@ -2,6 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
+import { User } from "@prisma/client"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
@@ -21,9 +22,15 @@ import {
 import UserLoginForm from "./user-login-form"
 import UserRegisterForm from "./user-register-form"
 
-export function SiteHeader() {
+interface SiteHeaderProps {
+  currentUser?: User | null
+}
+
+export function SiteHeader({ currentUser }: SiteHeaderProps) {
   const [openRegisterForm, setOpenRegisterForm] = React.useState(false)
   const [openLoginForm, setOpenLoginForm] = React.useState(false)
+
+  console.log({ currentUser })
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
@@ -65,7 +72,7 @@ export function SiteHeader() {
               name="Login now"
               description="Login using email and password"
             >
-              <UserLoginForm />
+              <UserLoginForm open={openLoginForm} setOpen={setOpenLoginForm} />
             </AuthFormDialog>
             <Link
               href={siteConfig.links.github}

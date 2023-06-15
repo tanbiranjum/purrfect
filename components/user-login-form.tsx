@@ -21,7 +21,12 @@ import {
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
-const UserLoginForm = () => {
+interface UserLoginFormProps {
+    open: boolean,
+    setOpen: (open: boolean) => void
+}
+
+const UserLoginForm: React.FC<UserLoginFormProps> = ({open, setOpen}) => {
   const router = useRouter()
 
   const form = useForm<z.infer<typeof userLoginSchema>>({
@@ -42,6 +47,7 @@ const UserLoginForm = () => {
     }).then((callback) => {
       if (callback?.ok) {
         toast.success("Logged in!")
+        setOpen(!open)
         router.refresh()
       }
 
