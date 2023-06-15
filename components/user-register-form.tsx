@@ -20,7 +20,15 @@ import {
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
-const UserRegisterForm = () => {
+interface UserRegisterFormProps {
+  open: boolean
+  setOpen: (open: boolean) => void
+}
+
+const UserRegisterForm: React.FC<UserRegisterFormProps> = ({
+  open,
+  setOpen,
+}) => {
   const form = useForm<z.infer<typeof userAuthSchema>>({
     resolver: zodResolver(userAuthSchema),
     defaultValues: {
@@ -38,6 +46,7 @@ const UserRegisterForm = () => {
       .post("/api/register", values)
       .then(() => {
         toast.success("Registration completed!")
+        setOpen(!open)
       })
       .catch(() => {
         toast.error("Something went wrong!")

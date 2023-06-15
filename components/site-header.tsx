@@ -64,7 +64,10 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
               name="Register now"
               description="Registration is quite easy than you think"
             >
-              <UserRegisterForm />
+              <UserRegisterForm
+                open={openRegisterForm}
+                setOpen={setOpenRegisterForm}
+              />
             </AuthFormDialog>
             <AuthFormDialog
               open={openLoginForm}
