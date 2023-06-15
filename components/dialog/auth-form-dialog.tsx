@@ -9,30 +9,33 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog"
-import UserRegisterForm from "../user-register-form"
 
-interface RegisterFormDialogProps {
+interface AuthFormDialogProps {
   open: boolean
   setOpen: (open: boolean) => void
+  name: string
+  description: string
+  children: React.ReactNode
 }
 
-const RegisterFormDialog: React.FC<RegisterFormDialogProps> = ({
+const AuthFormDialog: React.FC<AuthFormDialogProps> = ({
   open,
   setOpen,
+  name,
+  description,
+  children,
 }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Signup Now</DialogTitle>
-          <DialogDescription>
-            Register To Aircnc is easier than you think
-          </DialogDescription>
+          <DialogTitle>{name}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <UserRegisterForm />
+        {children}
       </DialogContent>
     </Dialog>
   )
 }
 
-export default RegisterFormDialog
+export default AuthFormDialog

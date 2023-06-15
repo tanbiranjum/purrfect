@@ -9,7 +9,7 @@ import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import RegisterFormDialog from "./dialog/RegisterFormDialog"
+import AuthFormDialog from "./dialog/auth-form-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import {
   Menubar,
@@ -18,9 +18,12 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "./ui/menubar"
+import UserLoginForm from "./user-login-form"
+import UserRegisterForm from "./user-register-form"
 
 export function SiteHeader() {
-  const [open, setOpen] = React.useState(false)
+  const [openRegisterForm, setOpenRegisterForm] = React.useState(false)
+  const [openLoginForm, setOpenLoginForm] = React.useState(false)
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
@@ -37,14 +40,33 @@ export function SiteHeader() {
                   </Avatar>
                 </MenubarTrigger>
                 <MenubarContent>
-                  <MenubarItem>Login</MenubarItem>
-                  <MenubarItem onClick={() => setOpen(!open)}>
-                    Signup
+                  <MenubarItem onClick={() => setOpenLoginForm(!openLoginForm)}>
+                    Login
+                  </MenubarItem>
+                  <MenubarItem
+                    onClick={() => setOpenRegisterForm(!openRegisterForm)}
+                  >
+                    Register
                   </MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
             </Menubar>
-            <RegisterFormDialog open={open} setOpen={setOpen} />
+            <AuthFormDialog
+              open={openRegisterForm}
+              setOpen={setOpenRegisterForm}
+              name="Register now"
+              description="Registration is quite easy than you think"
+            >
+              <UserRegisterForm />
+            </AuthFormDialog>
+            <AuthFormDialog
+              open={openLoginForm}
+              setOpen={setOpenLoginForm}
+              name="Login now"
+              description="Login using email and password"
+            >
+              <UserLoginForm />
+            </AuthFormDialog>
             <Link
               href={siteConfig.links.github}
               target="_blank"
