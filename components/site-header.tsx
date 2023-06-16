@@ -3,6 +3,7 @@
 import React from "react"
 import Link from "next/link"
 import { User } from "@prisma/client"
+import { signOut } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
@@ -47,14 +48,35 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                   </Avatar>
                 </MenubarTrigger>
                 <MenubarContent>
-                  <MenubarItem onClick={() => setOpenLoginForm(!openLoginForm)}>
-                    Login
-                  </MenubarItem>
-                  <MenubarItem
-                    onClick={() => setOpenRegisterForm(!openRegisterForm)}
-                  >
-                    Register
-                  </MenubarItem>
+                  {currentUser ? (
+                    <>
+                      <MenubarItem onClick={() => {}}>My trips</MenubarItem>
+                      <MenubarItem onClick={() => {}}>My favorites</MenubarItem>
+                      <MenubarItem onClick={() => {}}>
+                        My reservations
+                      </MenubarItem>
+                      <MenubarItem onClick={() => {}}>
+                        My properties
+                      </MenubarItem>
+                      <MenubarItem onClick={() => {}}>My home</MenubarItem>
+                      <MenubarItem onClick={() => signOut()}>
+                        Logout
+                      </MenubarItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenubarItem
+                        onClick={() => setOpenLoginForm(!openLoginForm)}
+                      >
+                        Login
+                      </MenubarItem>
+                      <MenubarItem
+                        onClick={() => setOpenRegisterForm(!openRegisterForm)}
+                      >
+                        Register
+                      </MenubarItem>
+                    </>
+                  )}
                 </MenubarContent>
               </MenubarMenu>
             </Menubar>

@@ -18,15 +18,16 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 
+import { Icons } from "./icons"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
 interface UserLoginFormProps {
-    open: boolean,
-    setOpen: (open: boolean) => void
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
-const UserLoginForm: React.FC<UserLoginFormProps> = ({open, setOpen}) => {
+const UserLoginForm: React.FC<UserLoginFormProps> = ({ open, setOpen }) => {
   const router = useRouter()
 
   const form = useForm<z.infer<typeof userLoginSchema>>({
@@ -88,6 +89,22 @@ const UserLoginForm: React.FC<UserLoginFormProps> = ({open, setOpen}) => {
         />
         <Button type="submit">Next</Button>
       </form>
+      <div className="flex flex-col gap-3">
+        <Button
+          onClick={() => signIn("google")}
+          className="flex w-full gap-2 bg-red-500 dark:bg-white"
+        >
+          <Icons.google />
+          Continue with Google
+        </Button>
+        <Button
+          onClick={() => signIn("github")}
+          className="flex w-full gap-2 bg-black dark:bg-white"
+        >
+          <Icons.gitHub className="h-4 text-white dark:text-slate-800" />
+          Continue with Github
+        </Button>
+      </div>
     </Form>
   )
 }
