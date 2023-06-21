@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Aircnc",
-  description: "Aircnc built with Radix UI and Tailwind CSS.",
+  name: "Purrfect",
+  description: "Adopt your soulmate and true companion.",
   mainNav: [
     {
       title: "Home",

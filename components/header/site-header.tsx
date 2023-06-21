@@ -1,35 +1,38 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { User } from "@prisma/client"
 import { signOut } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
+import useLoginModal from "@/hooks/use-login-modal"
+import useRegisterModal from "@/hooks/use-register-modal"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-import AuthFormDialog from "./dialog/auth-form-dialog"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import AuthFormDialog from "../dialog/auth-form-dialog"
+import UserLoginModal from "../modal/user-login-modal"
+import UserRegisterModal from "../modal/user-register-modal"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from "./ui/menubar"
-import UserLoginForm from "./user-login-form"
-import UserRegisterForm from "./user-register-form"
+} from "../ui/menubar"
+import Categories from "./categories"
 
 interface SiteHeaderProps {
   currentUser?: User | null
 }
 
 export function SiteHeader({ currentUser }: SiteHeaderProps) {
-  const [openRegisterForm, setOpenRegisterForm] = React.useState(false)
-  const [openLoginForm, setOpenLoginForm] = React.useState(false)
+  const useLogin = useLoginModal()
+  const useRegister = useRegisterModal()
 
   console.log({ currentUser })
   return (
@@ -65,14 +68,10 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                     </>
                   ) : (
                     <>
-                      <MenubarItem
-                        onClick={() => setOpenLoginForm(!openLoginForm)}
-                      >
+                      <MenubarItem onClick={() => useLogin.open()}>
                         Login
                       </MenubarItem>
-                      <MenubarItem
-                        onClick={() => setOpenRegisterForm(!openRegisterForm)}
-                      >
+                      <MenubarItem onClick={() => useRegister.open()}>
                         Register
                       </MenubarItem>
                     </>
@@ -80,25 +79,8 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                 </MenubarContent>
               </MenubarMenu>
             </Menubar>
-            <AuthFormDialog
-              open={openRegisterForm}
-              setOpen={setOpenRegisterForm}
-              name="Register now"
-              description="Registration is quite easy than you think"
-            >
-              <UserRegisterForm
-                open={openRegisterForm}
-                setOpen={setOpenRegisterForm}
-              />
-            </AuthFormDialog>
-            <AuthFormDialog
-              open={openLoginForm}
-              setOpen={setOpenLoginForm}
-              name="Login now"
-              description="Login using email and password"
-            >
-              <UserLoginForm open={openLoginForm} setOpen={setOpenLoginForm} />
-            </AuthFormDialog>
+            <UserRegisterModal />
+            <UserLoginModal />
             <Link
               href={siteConfig.links.github}
               target="_blank"
@@ -133,6 +115,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
           </nav>
         </div>
       </div>
+      <Categories />
     </header>
   )
 }
