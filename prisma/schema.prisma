@@ -21,9 +21,10 @@ model User {
   updateAt      DateTime  @updatedAt
   favoriteIds   String[]  @db.ObjectId
 
-  accounts     Account[]
-  listings     Listing[]
-  reservations Reservation[]
+  accounts             Account[]
+  Pet                  Pet[]
+  AddoptionApplication AdoptionApplication[]
+  AdoptionHistory      AdoptionHistory[]
 }
 
 model Account {
@@ -45,35 +46,48 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Listing {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  description   String
-  imageSrc      String
-  createdAt     DateTime @default(now())
-  category      String
-  roomCount     Int
-  bathroomCount Int
-  guestCount    Int
-  locationValue String
-  userId        String   @db.ObjectId
-  price         Int
+model Pet {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  species   String
+  age       Int
+  gender    Gender
+  imageSrc  String?
+  adopted   Boolean  @default(false)
+  createdAt DateTime @default(now())
 
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  reservations Reservation[]
+  ownerId String? @db.ObjectId
+  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  //  Adoption Application
+  adoptionApplication AdoptionApplication?
+
+  adoptionHistory        AdoptionHistory[]
+  adoptionApplicationId String?           @db.ObjectId
 }
 
-model Reservation {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @db.ObjectId
-  listingId  String   @db.ObjectId
-  startDate  DateTime
-  endDate    DateTime
-  totalPrice Int
-  createdAt  DateTime @default(now())
+model AdoptionApplication {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  email     String?
+  phone     String?
+  createdAt DateTime @default(now())
+  Pet       Pet?     @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId     String?  @unique @db.ObjectId
 
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  applicant   User   @relation(fields: [applicantId], references: [id])
+  applicantId String @db.ObjectId
+}
+
+model AdoptionHistory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  adopted   Boolean  @default(false)
+  adoptedAt DateTime @default(now())
+  Pet       Pet?     @relation(fields: [petId], references: [id])
+  petId     String?  @db.ObjectId
+
+  adoptedBy   User   @relation(fields: [adoptedById], references: [id])
+  adoptedById String @db.ObjectId
 }
 
 model VerificationToken {
@@ -83,4 +97,9 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Gender {
+  male
+  female
 }

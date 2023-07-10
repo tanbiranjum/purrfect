@@ -9,39 +9,29 @@ import CategoryBox from "./category-box"
 
 export const categories = [
   {
-    icon: <Icons.mountain />,
-    label: "moutain",
-    description: "Mountain starts here",
+    icon: <Icons.cat />,
+    label: "cat",
+    description: "Cute kitty cat",
   },
   {
-    icon: <Icons.sea />,
-    label: "ocean",
-    description: "Ocean starts here",
+    icon: <Icons.dog />,
+    label: "dog",
+    description: "Your best friend and companion",
   },
   {
-    icon: <Icons.forest />,
-    label: "forest",
+    icon: <Icons.rabbit />,
+    label: "rabbit",
     description: "Forest starts here",
   },
   {
-    icon: <Icons.building />,
-    label: "apartment",
+    icon: <Icons.bird height="25"/>,
+    label: "bird",
     description: "Forest starts here",
   },
   {
-    icon: <Icons.tent />,
-    label: "tent",
+    icon: <Icons.egg />,
+    label: "others",
     description: "Tent starts here",
-  },
-  {
-    icon: <Icons.ship />,
-    label: "ship",
-    description: "Ship starts here",
-  },
-  {
-    icon: <Icons.hotel />,
-    label: "hotel",
-    description: "Hotel starts here",
   },
 ]
 
@@ -85,7 +75,7 @@ const Categories = () => {
     infinite: true,
     speed: 500,
     arrows: true,
-    slidesToShow: 6,
+    slidesToShow: 5,
     slidesToScroll: 1,
     prevArrow: <PreviousArrow />,
     nextArrow: <NextArrow />,

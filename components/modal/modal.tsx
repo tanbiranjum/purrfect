@@ -8,8 +8,8 @@ import { DialogHeader } from "../ui/dialog"
 
 interface ModalProps {
   name: string
-  isOpen: boolean
-  toggle: () => void
+  isOpen?: boolean
+  toggle?: () => void
   children: React.ReactNode
 }
 
