@@ -1,40 +1,47 @@
 "use client"
 
 import React, { useMemo, useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { FieldValues, useForm } from "react-hook-form"
+import { z } from "zod"
 
+import { adoptionSchema } from "@/lib/validations/adoption"
 import useAdoptionModal from "@/hooks/use-adoption-modal"
 
+import { Button } from "../ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form"
+import { Input } from "../ui/input"
 import Modal from "./modal"
 
 enum STEPS {
-  CATEGORY = 0,
-  LOCATION = 1,
-  INFO = 2,
+  INFO = 0,
+  CATEGORY = 1,
+  LOCATION = 2,
   IMAGES = 3,
   DESCRIPTION = 4,
-  PRICE = 5,
+  OWNER = 5,
 }
 
 const RentModal = () => {
   const useAdoption = useAdoptionModal()
-  const [step, setStep] = useState(STEPS.CATEGORY)
+  const [step, setStep] = useState(STEPS.INFO)
 
-  const { register, watch } = useForm<FieldValues>({
+  const form = useForm<z.infer<typeof adoptionSchema>>({
+    resolver: zodResolver(adoptionSchema),
     defaultValues: {
+      name: "",
       category: "",
-      location: null,
-      guestCount: 1,
-      roomCount: 1,
-      bathroomCount: 1,
-      imageSrc: "",
-      price: 1,
-      title: "",
-      description: "",
     },
   })
 
-  const category = watch("category")
+  const category = form.watch("category")
 
   const onBack = () => {
     if (step > 0) {
@@ -47,7 +54,7 @@ const RentModal = () => {
   }
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.PRICE) {
+    if (step === STEPS.OWNER) {
       return "Create"
     }
     return "Next"
@@ -59,9 +66,59 @@ const RentModal = () => {
     }
     useAdoption.open()
   }
+
+  const renderForm = () => {
+    switch (step) {
+      case STEPS.INFO:
+        return (
+          <>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <FormControl>
+                    <Input placeholder="name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )
+      case STEPS.CATEGORY:
+        return <div>Category</div>
+      case STEPS.LOCATION:
+        return <div>Location</div>
+      default:
+        return null
+    }
+  }
+
   return (
     <Modal name="Adoption" isOpen={useAdoption.isOpen} toggle={toggle}>
-      <div></div>
+      <div>Hello</div>
+      <Form {...form}>{renderForm()}</Form>
+      <div className="flex justify-start gap-3">
+        <Button onClick={onBack} disabled={step == 0}>
+          Prev
+        </Button>
+        <Button onClick={onNext}>{actionLabel}</Button>
+      </div>
     </Modal>
   )
 }
