@@ -7,11 +7,21 @@ import { z } from "zod"
 
 import { adoptionSchema } from "@/lib/validations/adoption"
 import useAdoptionModal from "@/hooks/use-adoption-modal"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 import { Button } from "../ui/button"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -91,9 +101,23 @@ const RentModal = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <Input placeholder="name" {...field} />
-                  </FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select value of your pet" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="cat">Cat</SelectItem>
+                      <SelectItem value="dog">Dog</SelectItem>
+                      <SelectItem value="bird">Bird</SelectItem>
+                      <SelectItem value="rabbit">Rabbit</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -111,7 +135,6 @@ const RentModal = () => {
 
   return (
     <Modal name="Adoption" isOpen={useAdoption.isOpen} toggle={toggle}>
-      <div>Hello</div>
       <Form {...form}>{renderForm()}</Form>
       <div className="flex justify-start gap-3">
         <Button onClick={onBack} disabled={step == 0}>

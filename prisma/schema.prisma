@@ -49,7 +49,6 @@ model Account {
 model Pet {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String?
-  species   String
   age       Int
   gender    Gender
   imageSrc  String?
