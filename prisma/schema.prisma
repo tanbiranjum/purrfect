@@ -61,7 +61,7 @@ model Pet {
   //  Adoption Application
   adoptionApplication AdoptionApplication?
 
-  adoptionHistory        AdoptionHistory[]
+  adoptionHistory       AdoptionHistory[]
   adoptionApplicationId String?           @db.ObjectId
 }
 
@@ -101,4 +101,5 @@ model VerificationToken {
 enum Gender {
   male
   female
+  unknown
 }

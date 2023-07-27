@@ -28,6 +28,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.4",
     "@types/react-slick": "^0.23.10",
+    "@uploadthing/react": "^5.2.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "class-variance-authority": "^0.4.0",
@@ -39,6 +40,7 @@
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^2.4.1",
     "react-slick": "^0.29.0",
@@ -46,6 +48,7 @@
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
+    "uploadthing": "^5.2.1",
     "zod": "^3.21.4",
     "zustand": "^4.3.8"
   },

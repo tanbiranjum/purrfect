@@ -4,6 +4,7 @@ import {
   ChevronLeft,
   ChevronRight,
   DogIcon,
+  EggIcon,
   LucideProps,
   Menu,
   Moon,
@@ -13,7 +14,6 @@ import {
   Tent,
   TreePine,
   Twitter,
-  EggIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 

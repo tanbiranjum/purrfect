@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { CldUploadWidget } from "next-cloudinary"
 import { FieldValues, useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -17,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import ImageUpload from "../input/ImageUpload"
 import { Button } from "../ui/button"
 import {
   Form,
@@ -32,11 +34,10 @@ import Modal from "./modal"
 
 enum STEPS {
   INFO = 0,
-  CATEGORY = 1,
+  IMAGES = 1,
   LOCATION = 2,
-  IMAGES = 3,
-  DESCRIPTION = 4,
-  OWNER = 5,
+  DESCRIPTION = 3,
+  OWNER = 4,
 }
 
 const RentModal = () => {
@@ -48,10 +49,22 @@ const RentModal = () => {
     defaultValues: {
       name: "",
       category: "",
+      age: 0,
+      gender: "",
+      imageSrc: "",
     },
   })
 
   const category = form.watch("category")
+  const imageSrc = form.watch("imageSrc")
+
+  const setCustomValue = (id: any, value: any) => {
+    form.setValue(id, value, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    })
+  }
 
   const onBack = () => {
     if (step > 0) {
@@ -122,10 +135,56 @@ const RentModal = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Age</FormLabel>
+                  <FormControl>
+                    <Input placeholder="age" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gender</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your pet's gender" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                      <SelectItem value="unknown">Unknown</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </>
         )
-      case STEPS.CATEGORY:
-        return <div>Category</div>
+      case STEPS.IMAGES:
+        return (
+          <div>
+            Upload Image of your pet
+            <ImageUpload
+              onChange={(value) => setCustomValue("imageSrc", value)}
+              value={imageSrc}
+            />
+          </div>
+        )
       case STEPS.LOCATION:
         return <div>Location</div>
       default:
