@@ -12,6 +12,7 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
 import getCurrentUser from "./actions/get-current-user"
+import AuthProvider from "./providers/auth-provider"
 
 export const metadata: Metadata = {
   title: {
@@ -47,11 +48,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader currentUser={currentUser} />
-              <div className="flex-1">{children}</div>
-            </div>
-            <TailwindIndicator />
+            <AuthProvider currentUser={currentUser}>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader currentUser={currentUser} />
+                <div className="flex-1">{children}</div>
+              </div>
+              <TailwindIndicator />
+            </AuthProvider>
           </ThemeProvider>
           <Toaster />
         </body>

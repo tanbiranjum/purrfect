@@ -11,12 +11,19 @@ interface ModalProps {
   isOpen?: boolean
   toggle?: () => void
   children: React.ReactNode
+  className?: string
 }
 
-const Modal: React.FC<ModalProps> = ({ name, isOpen, toggle, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  name,
+  isOpen,
+  toggle,
+  className,
+  children,
+}) => {
   return (
     <Dialog open={isOpen} onOpenChange={toggle}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className={className || "sm:max-w-[425px]"}>
         <DialogHeader>
           <DialogTitle>{name}</DialogTitle>
         </DialogHeader>

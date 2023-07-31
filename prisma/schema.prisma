@@ -50,8 +50,10 @@ model Pet {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String?
   age       Int
-  gender    Gender
+  category  String
+  gender    String
   imageSrc  String?
+  description String?
   adopted   Boolean  @default(false)
   createdAt DateTime @default(now())
 
@@ -70,12 +72,14 @@ model AdoptionApplication {
   name      String?
   email     String?
   phone     String?
+  address   Address @relation(fields: [addressId], references: [id])
   createdAt DateTime @default(now())
-  Pet       Pet?     @relation(fields: [petId], references: [id], onDelete: Cascade)
+  pet       Pet?     @relation(fields: [petId], references: [id], onDelete: Cascade)
   petId     String?  @unique @db.ObjectId
 
-  applicant   User   @relation(fields: [applicantId], references: [id])
-  applicantId String @db.ObjectId
+  applicant   User    @relation(fields: [applicantId], references: [id])
+  applicantId String  @db.ObjectId
+  addressId   String @db.ObjectId
 }
 
 model AdoptionHistory {
@@ -98,8 +102,12 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-enum Gender {
-  male
-  female
-  unknown
+model Address {
+  id                  String                @id @default(auto()) @map("_id") @db.ObjectId
+  division            String
+  district            String
+  upazilla            String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  AdoptionApplication AdoptionApplication[]
 }
