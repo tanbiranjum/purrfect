@@ -179,12 +179,7 @@ const RentModal = () => {
               placeholder="Select value of your pet"
               options={generateCatagory()}
             />
-            <FormInput
-              form={form}
-              name="age"
-              label="Age"
-              placeholder="age"
-            />
+            <FormInput form={form} name="age" label="Age" placeholder="age" />
             <FormSelect
               form={form}
               name="gender"
@@ -209,7 +204,7 @@ const RentModal = () => {
                       value={imageSrc}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage/>
                 </FormItem>
               )}
             />
