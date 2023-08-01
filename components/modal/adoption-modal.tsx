@@ -7,6 +7,7 @@ import axios from "axios"
 import { District } from "bd-geojs/dist/data/districts"
 import { Upazilla } from "bd-geojs/dist/data/upazillas"
 import { FieldValues, useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
 import { z } from "zod"
 
 import { adoptionSchema } from "@/lib/validations/adoption"
@@ -155,10 +156,22 @@ const RentModal = () => {
   }
 
   const onSubmit = async (values: z.infer<typeof adoptionSchema>) => {
-    // get user id from auth
-    const adoption = await axios.post("/api/adoption", { values, currentUser })
-
-    console.log(adoption)
+    try {
+      const adoption = await axios.post("/api/adoption", {
+        values,
+        currentUser,
+      })
+      console.log(adoption)
+      if (adoption) {
+        toast.success(
+          `Your pet ${adoption.data.pet.name} is ready for adoption`
+        )
+        form.reset()
+        useAdoption.close()
+      }
+    } catch (error: any) {
+      toast.error(`Something went wrong! ${error.message}`)
+    }
   }
 
   const renderForm = () => {
@@ -204,7 +217,7 @@ const RentModal = () => {
                       value={imageSrc}
                     />
                   </FormControl>
-                  <FormMessage/>
+                  <FormMessage />
                 </FormItem>
               )}
             />
