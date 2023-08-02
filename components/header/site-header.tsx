@@ -6,6 +6,7 @@ import { User } from "@prisma/client"
 import { signOut } from "next-auth/react"
 
 import { siteConfig } from "@/config/site"
+import useAdoptionModal from "@/hooks/use-adoption-modal"
 import useLoginModal from "@/hooks/use-login-modal"
 import useRegisterModal from "@/hooks/use-register-modal"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -25,7 +26,6 @@ import {
   MenubarTrigger,
 } from "../ui/menubar"
 import Categories from "./categories"
-import useAdoptionModal from "@/hooks/use-adoption-modal"
 
 interface SiteHeaderProps {
   currentUser?: User | null
@@ -43,7 +43,9 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
         <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
           <MainNav items={siteConfig.mainNav} />
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <Button onClick={() => useAdoption.open()}>Register an Adoption</Button>
+            <Button onClick={() => useAdoption.open()}>
+              Register an Adoption
+            </Button>
             <nav className="flex items-center space-x-1">
               <Menubar>
                 <MenubarMenu>
@@ -57,17 +59,13 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                   <MenubarContent>
                     {currentUser ? (
                       <>
-                        <MenubarItem onClick={() => {}}>My trips</MenubarItem>
-                        <MenubarItem onClick={() => {}}>
-                          My favorites
+                        <MenubarItem>
+                          <Link href="/adoption/status">Adoption Status</Link>
                         </MenubarItem>
                         <MenubarItem onClick={() => {}}>
-                          My reservations
+                          Adoption History
                         </MenubarItem>
-                        <MenubarItem onClick={() => {}}>
-                          My properties
-                        </MenubarItem>
-                        <MenubarItem onClick={() => {}}>My home</MenubarItem>
+                        <MenubarItem onClick={() => {}}>Profile</MenubarItem>
                         <MenubarItem onClick={() => signOut()}>
                           Logout
                         </MenubarItem>

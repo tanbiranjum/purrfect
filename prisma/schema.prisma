@@ -47,24 +47,21 @@ model Account {
 }
 
 model Pet {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?
-  age       Int
-  category  String
-  gender    String
-  imageSrc  String?
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  age         Int
+  category    String
+  gender      String
+  imageSrc    String?
   description String?
-  adopted   Boolean  @default(false)
-  createdAt DateTime @default(now())
+  adopted     Boolean  @default(false)
+  createdAt   DateTime @default(now())
 
   ownerId String? @db.ObjectId
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
-  //  Adoption Application
-  adoptionApplication AdoptionApplication?
-
-  adoptionHistory       AdoptionHistory[]
-  adoptionApplicationId String?           @db.ObjectId
+  adoptionHistory     AdoptionHistory[]
+  AdoptionApplication AdoptionApplication?
 }
 
 model AdoptionApplication {
@@ -72,13 +69,13 @@ model AdoptionApplication {
   name      String?
   email     String?
   phone     String?
-  address   Address @relation(fields: [addressId], references: [id])
+  address   Address  @relation(fields: [addressId], references: [id])
   createdAt DateTime @default(now())
   pet       Pet?     @relation(fields: [petId], references: [id], onDelete: Cascade)
   petId     String?  @unique @db.ObjectId
 
-  applicant   User    @relation(fields: [applicantId], references: [id])
-  applicantId String  @db.ObjectId
+  applicant   User   @relation(fields: [applicantId], references: [id])
+  applicantId String @db.ObjectId
   addressId   String @db.ObjectId
 }
 

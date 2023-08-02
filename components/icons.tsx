@@ -14,6 +14,7 @@ import {
   Tent,
   TreePine,
   Twitter,
+  TrashIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -35,6 +36,7 @@ export const Icons = {
   ship: Sailboat,
   leftArrow: ChevronLeft,
   rightArrow: ChevronRight,
+  delete: TrashIcon,
   hotel: (props: LucideProps) => (
     <svg
       {...props}
