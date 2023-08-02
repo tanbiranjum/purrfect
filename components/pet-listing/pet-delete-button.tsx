@@ -2,12 +2,47 @@
 
 import React from "react"
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { SafeAdoptionApplication } from "@/app/types/index"
+
 import { Icons } from "../icons"
 
-const PetDeleteButton = () => {
+interface PetDeleteButtonProps extends Partial<SafeAdoptionApplication> {}
+
+const PetDeleteButton: React.FC<PetDeleteButtonProps> = ({
+  id,
+  applicantId,
+}) => {
   return (
     <div className="cursor-pointer">
-      <Icons.delete color="red" size="24"/>
+      <AlertDialog>
+        <AlertDialogTrigger>
+          <Icons.delete color="red" size="24" />
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete from
+              our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

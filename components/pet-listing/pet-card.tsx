@@ -1,17 +1,13 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
+import type { Address, AdoptionApplication, Pet, User } from "@prisma/client"
+
+import { SafePet, SafePetListing, SafeUser } from "@/app/types/index"
 
 import PetDeleteButton from "./pet-delete-button"
 
-export interface PetCardProps {
-  pet: {
-    id: string
-    name: string | null
-    imageSrc: string | null
-    category: string | null
-    adopted: boolean
-  }
+export interface PetCardProps extends SafePetListing {
   actionButton?: boolean
 }
 
@@ -45,7 +41,10 @@ const PetCard: React.FC<PetCardProps> = ({ pet, actionButton = false }) => {
       )}
       {actionButton && (
         <div className="top-4">
-          <PetDeleteButton />
+          <PetDeleteButton
+            id={pet.AdoptionApplication?.id || ""}
+            applicantId={pet.AdoptionApplication?.applicantId || ""}
+          />
         </div>
       )}
     </div>

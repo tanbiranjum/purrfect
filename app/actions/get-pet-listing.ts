@@ -67,7 +67,7 @@ export default async function getPetListing(params: PetListingParams) {
         const petListing = await prisma?.pet.findMany({
             include: {
                 owner: true,
-                adoptionApplication: {
+                AdoptionApplication: {
                     include: {
                         address: true,
                     }

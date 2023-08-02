@@ -8,6 +8,7 @@ interface IndexPageProps {
 
 export default async function IndexPage({ searchParams }: IndexPageProps) {
   const pets = await getPetListing(searchParams)
+  console.log(pets)
   return (
     <section className="container grid grid-cols-5 gap-6 pb-8 pt-6 md:py-10">
       {pets?.map((pet) => (

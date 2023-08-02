@@ -18,7 +18,7 @@ model User {
   image         String?
   password      String?
   createdAt     DateTime  @default(now())
-  updateAt      DateTime  @updatedAt
+  updatedAt     DateTime  @updatedAt
   favoriteIds   String[]  @db.ObjectId
 
   accounts             Account[]
@@ -56,6 +56,7 @@ model Pet {
   description String?
   adopted     Boolean  @default(false)
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   ownerId String? @db.ObjectId
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
@@ -69,8 +70,9 @@ model AdoptionApplication {
   name      String?
   email     String?
   phone     String?
-  address   Address  @relation(fields: [addressId], references: [id])
+  address   Address  @relation(fields: [addressId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   pet       Pet?     @relation(fields: [petId], references: [id], onDelete: Cascade)
   petId     String?  @unique @db.ObjectId
 
@@ -82,7 +84,8 @@ model AdoptionApplication {
 model AdoptionHistory {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   adopted   Boolean  @default(false)
-  adoptedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   Pet       Pet?     @relation(fields: [petId], references: [id])
   petId     String?  @db.ObjectId
 
