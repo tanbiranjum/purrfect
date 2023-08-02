@@ -25,11 +25,17 @@ export type SafeAdoptionWithAddress = SafeAdoptionApplication & {
     address: SafeAddress
 }
 
-export type SafePetListing = {
-    pet: SafePet & {
-        owner: SafeUser | null
-        AdoptionApplication: SafeAdoptionWithAddress | null
-    }
+// export type SafePetListing = {
+//     pet: SafePet & {
+//         owner: SafeUser | null
+//         AdoptionApplication: SafeAdoptionWithAddress | null
+//     }
+// }
+
+export type SafeAdoptionListing = SafeAdoptionApplication & {
+    pet: SafePet
+    applicant: SafeUser
+    address: SafeAddress
 }
 
-export type SafePetListings = SafePetListing[]
+// export type SafePetListings = SafePetListing[]

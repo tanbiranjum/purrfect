@@ -17,9 +17,9 @@ import { SafeAdoptionApplication } from "@/app/types/index"
 
 import { Icons } from "../icons"
 
-interface PetDeleteButtonProps extends Partial<SafeAdoptionApplication> {}
+interface AdoptionDeleteButtonProps extends Partial<SafeAdoptionApplication> {}
 
-const PetDeleteButton: React.FC<PetDeleteButtonProps> = ({
+const AdoptionDeleteButton: React.FC<AdoptionDeleteButtonProps> = ({
   id,
   applicantId,
 }) => {
@@ -47,4 +47,4 @@ const PetDeleteButton: React.FC<PetDeleteButtonProps> = ({
   )
 }
 
-export default PetDeleteButton
+export default AdoptionDeleteButton
