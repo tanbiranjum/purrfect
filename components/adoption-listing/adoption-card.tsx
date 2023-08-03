@@ -38,7 +38,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
         </Link>
         <span className="text-md text-gray-500">{data.pet.category}</span>
       </div>
-      {data.pet.adopted && (
+      {data.adopted && (
         <div className="absolute left-0 top-0 rounded-sm bg-black p-2 text-sm text-white">
           Adopted
         </div>

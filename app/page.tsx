@@ -9,12 +9,12 @@ interface IndexPageProps {
 }
 
 export default async function IndexPage({ searchParams }: IndexPageProps) {
-  const pets = await getAdoptionListing(searchParams)
-  console.log(pets)
+  const adoptions = await getAdoptionListing(searchParams)
+  console.log(adoptions)
   return (
     <section className="container grid grid-cols-5 gap-6 pb-8 pt-6 md:py-10">
-      {pets?.map((pet) => (
-        <PetCard key={pet.id} data={pet} />
+      {adoptions?.map((adoption) => (
+        <PetCard key={adoption.id} data={adoption} />
       ))}
     </section>
   )

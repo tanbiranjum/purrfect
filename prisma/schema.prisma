@@ -54,7 +54,6 @@ model Pet {
   gender      String
   imageSrc    String?
   description String?
-  adopted     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -70,6 +69,7 @@ model AdoptionApplication {
   name      String?
   email     String?
   phone     String?
+  adopted   Boolean  @default(false)
   address   Address  @relation(fields: [addressId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
