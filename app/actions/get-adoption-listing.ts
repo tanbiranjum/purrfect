@@ -36,7 +36,9 @@ export default async function getAdoptionListing(params: AdoptionListingParams) 
                 pet: true,
                 address: true
             },
-            where: query,
+            where: {
+                pet: query
+            },
             orderBy: {
                 createdAt: 'desc'
             }

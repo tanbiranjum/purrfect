@@ -1,7 +1,6 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import type { Address, AdoptionApplication, Pet, User } from "@prisma/client"
 
 import { SafeAdoptionListing } from "@/app/types/index"
 

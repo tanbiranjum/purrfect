@@ -5,6 +5,7 @@ import {
   ChevronRight,
   DogIcon,
   EggIcon,
+  Loader2,
   LucideProps,
   Menu,
   Moon,
@@ -12,9 +13,9 @@ import {
   Sailboat,
   SunMedium,
   Tent,
+  TrashIcon,
   TreePine,
   Twitter,
-  TrashIcon,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -37,6 +38,9 @@ export const Icons = {
   leftArrow: ChevronLeft,
   rightArrow: ChevronRight,
   delete: TrashIcon,
+  loader: (props: LucideProps) => (
+    <Loader2 {...props} color="currentColor" size="24" />
+  ),
   hotel: (props: LucideProps) => (
     <svg
       {...props}

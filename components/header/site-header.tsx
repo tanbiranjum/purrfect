@@ -36,16 +36,17 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
   const useRegister = useRegisterModal()
   const useAdoption = useAdoptionModal()
 
-  console.log({ currentUser })
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
       <div className="border-b">
         <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
           <MainNav items={siteConfig.mainNav} />
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <Button onClick={() => useAdoption.open()}>
-              Register an Adoption
-            </Button>
+            {currentUser && (
+              <Button onClick={() => useAdoption.open()}>
+                Register an Adoption
+              </Button>
+            )}
             <nav className="flex items-center space-x-1">
               <Menubar>
                 <MenubarMenu>

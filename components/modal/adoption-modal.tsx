@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 import { AuthContext } from "@/app/providers/auth-provider"
 
+import { Icons } from "../icons"
 import ImageUpload from "../input/Image-upload"
 import FormInput from "../input/form-input"
 import FormSelect from "../input/form-select"
@@ -31,13 +32,11 @@ import { Button } from "../ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import { Input } from "../ui/input"
 import Modal from "./modal"
 
 enum STEPS {
@@ -163,9 +162,7 @@ const RentModal = () => {
       })
       console.log(adoption)
       if (adoption) {
-        toast.success(
-          `Your pet ${adoption.data.pet.name} is ready for adoption`
-        )
+        toast.success(`Your pet is ready for adoption`)
         form.reset()
         useAdoption.close()
       }
@@ -366,7 +363,12 @@ const RentModal = () => {
           {renderForm()}
           <div className="flex justify-start gap-3">
             {step === STEPS.DESCRIPTION && (
-              <Button type="submit">Create</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
+                  <Icons.loader className="animate-spin" />
+                )}
+                Create
+              </Button>
             )}
           </div>
         </form>

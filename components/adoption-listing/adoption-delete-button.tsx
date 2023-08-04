@@ -1,6 +1,8 @@
 "use client"
 
 import React from "react"
+import axios from "axios"
+import { toast } from "react-hot-toast"
 
 import {
   AlertDialog,
@@ -23,6 +25,18 @@ const AdoptionDeleteButton: React.FC<AdoptionDeleteButtonProps> = ({
   id,
   applicantId,
 }) => {
+  const handleDelete = async () => {
+    await axios
+      .delete(`/api/adoption/${id}`)
+      .then(() => {
+        toast.success("Adoption deleted")
+      })
+      .catch((err) => {
+        toast.error("There is an error occured")
+        console.log(err)
+      })
+  }
+
   return (
     <div className="cursor-pointer">
       <AlertDialog>
@@ -39,7 +53,7 @@ const AdoptionDeleteButton: React.FC<AdoptionDeleteButtonProps> = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Delete</AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -25,6 +25,7 @@ model User {
   Pet                  Pet[]
   AddoptionApplication AdoptionApplication[]
   AdoptionHistory      AdoptionHistory[]
+  AdoptionRequest      AdoptionRequest[]
 }
 
 model Account {
@@ -62,6 +63,7 @@ model Pet {
 
   adoptionHistory     AdoptionHistory[]
   AdoptionApplication AdoptionApplication?
+  AdoptionRequest     AdoptionRequest?
 }
 
 model AdoptionApplication {
@@ -76,9 +78,26 @@ model AdoptionApplication {
   pet       Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
   petId     String   @unique @db.ObjectId
 
+  applicant       User              @relation(fields: [applicantId], references: [id])
+  applicantId     String            @db.ObjectId
+  addressId       String            @db.ObjectId
+  AdoptionHistory AdoptionHistory[]
+}
+
+model AdoptionRequest {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  email     String?
+  phone     String?
+  message   String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  pet       Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId     String   @unique @db.ObjectId
+
   applicant   User   @relation(fields: [applicantId], references: [id])
   applicantId String @db.ObjectId
-  addressId   String @db.ObjectId
 }
 
 model AdoptionHistory {
@@ -88,6 +107,9 @@ model AdoptionHistory {
   updatedAt DateTime @updatedAt
   Pet       Pet?     @relation(fields: [petId], references: [id])
   petId     String?  @db.ObjectId
+
+  adoptionApplicationId String?              @db.ObjectId
+  adoptionApplication   AdoptionApplication? @relation(fields: [adoptionApplicationId], references: [id])
 
   adoptedBy   User   @relation(fields: [adoptedById], references: [id])
   adoptedById String @db.ObjectId
