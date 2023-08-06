@@ -24,10 +24,10 @@ import {
 } from "@/components/ui/select"
 import { AuthContext } from "@/app/providers/auth-provider"
 
+import ImageUpload from "../form/Image-upload"
+import FormInput from "../form/form-input"
+import FormSelect from "../form/form-select"
 import { Icons } from "../icons"
-import ImageUpload from "../input/Image-upload"
-import FormInput from "../input/form-input"
-import FormSelect from "../input/form-select"
 import { Button } from "../ui/button"
 import {
   Form,
