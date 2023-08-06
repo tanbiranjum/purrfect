@@ -10,22 +10,22 @@ import CategoryBox from "./category-box"
 export const categories = [
   {
     icon: <Icons.cat />,
-    label: "cat",
+    label: "Find cat",
     description: "Cute kitty cat",
   },
   {
     icon: <Icons.dog />,
-    label: "dog",
+    label: "Find dog",
     description: "Your best friend and companion",
   },
   {
     icon: <Icons.rabbit />,
-    label: "rabbit",
+    label: "Find rabbit",
     description: "Forest starts here",
   },
   {
     icon: <Icons.bird height="25"/>,
-    label: "bird",
+    label: "Find bird",
     description: "Forest starts here",
   },
   {

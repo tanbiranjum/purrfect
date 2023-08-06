@@ -6,37 +6,24 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { District } from "bd-geojs/dist/data/districts"
 import { Upazilla } from "bd-geojs/dist/data/upazillas"
-import { FieldValues, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
 
 import { adoptionSchema } from "@/lib/validations/adoption"
 import useAdoptionModal from "@/hooks/use-adoption-modal"
-import { useLocation } from "@/hooks/use-location"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { SelectItem } from "@/components/ui/select"
 import { AuthContext } from "@/app/providers/auth-provider"
 
 import ImageUpload from "../form/Image-upload"
 import FormInput from "../form/form-input"
 import FormSelect from "../form/form-select"
+import FormDistrictSelect from "../form/location-input/form-district-select"
+import FormDivisionSelect from "../form/location-input/form-division-select"
+import FormUpazillaSelect from "../form/location-input/form-upazilla-select"
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import Modal from "./modal"
 
 enum STEPS {
@@ -50,20 +37,9 @@ enum STEPS {
 const RentModal = () => {
   const useAdoption = useAdoptionModal()
   const [step, setStep] = useState(STEPS.INFO)
-  const { getDistricts, getDivisions, getUpazillas } = useLocation()
   const [divisionId, setDivisionId] = useState<string>("1")
   const [districtId, setDistrictId] = useState<string>("1")
-  const [districts, setDistricts] = useState<District[]>([])
-  const [upazilla, setUpazilla] = useState<Upazilla[]>([])
   const currentUser = useContext(AuthContext)
-
-  useEffect(() => {
-    setDistricts(getDistricts(divisionId))
-  }, [divisionId])
-
-  useEffect(() => {
-    setUpazilla(getUpazillas(districtId))
-  }, [districtId])
 
   const form = useForm<z.infer<typeof adoptionSchema>>({
     resolver: zodResolver(adoptionSchema),
@@ -77,8 +53,8 @@ const RentModal = () => {
       ownerPhone: "",
       ownerEmail: "",
       division: "1",
-      district: districts[0]?.id || "1",
-      upazilla: upazilla[0]?.id || "1",
+      district: "1",
+      upazilla: "1",
       description: "",
     },
   })
@@ -138,29 +114,12 @@ const RentModal = () => {
     )
   }
 
-  const generateDistrict = () => {
-    return districts.map((district) => (
-      <SelectItem key={district.id} value={district.id}>
-        {district.name}
-      </SelectItem>
-    ))
-  }
-
-  const generateUpazilla = () => {
-    return upazilla.map((upazilla) => (
-      <SelectItem key={upazilla.id} value={upazilla.id}>
-        {upazilla.name}
-      </SelectItem>
-    ))
-  }
-
   const onSubmit = async (values: z.infer<typeof adoptionSchema>) => {
     try {
       const adoption = await axios.post("/api/adoption", {
         values,
         currentUser,
       })
-      console.log(adoption)
       if (adoption) {
         toast.success(`Your pet is ready for adoption`)
         form.reset()
@@ -247,84 +206,25 @@ const RentModal = () => {
       case STEPS.LOCATION:
         return (
           <>
-            <FormField
-              control={form.control}
+            <FormDivisionSelect
+              form={form}
               name="division"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Division</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value)
-                      setDivisionId(value)
-                    }}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select division" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {getDivisions().map((division) => (
-                        <SelectItem
-                          className="text-black"
-                          key={division.id}
-                          value={division.id}
-                        >
-                          {division.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Division"
+              divisionId={divisionId}
+              setDivisionId={setDivisionId}
             />
-            <FormField
-              control={form.control}
+            <FormDistrictSelect
+              form={form}
               name="district"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>District</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value)
-                      setDistrictId(value)
-                    }}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select district" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>{generateDistrict()}</SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="District"
+              divisionId={divisionId}
+              setDistrictId={setDistrictId}
             />
-            <FormField
-              control={form.control}
+            <FormUpazillaSelect
+              form={form}
               name="upazilla"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Upazilla</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select division" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>{generateUpazilla()}</SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Upazilla"
+              districtId={districtId}
             />
           </>
         )

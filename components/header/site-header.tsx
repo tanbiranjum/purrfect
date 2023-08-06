@@ -9,12 +9,14 @@ import { siteConfig } from "@/config/site"
 import useAdoptionModal from "@/hooks/use-adoption-modal"
 import useLoginModal from "@/hooks/use-login-modal"
 import useRegisterModal from "@/hooks/use-register-modal"
+import useSearchModal from "@/hooks/use-search-modal"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 import RentModal from "../modal/adoption-modal"
+import SearchModal from "../modal/search-modal"
 import UserLoginModal from "../modal/user-login-modal"
 import UserRegisterModal from "../modal/user-register-modal"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
@@ -35,6 +37,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
   const useLogin = useLoginModal()
   const useRegister = useRegisterModal()
   const useAdoption = useAdoptionModal()
+  const useSearch = useSearchModal()
 
   return (
     <header className="sticky top-0 z-40 w-full bg-background">
@@ -47,6 +50,10 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                 Register an Adoption
               </Button>
             )}
+            <div>
+              {/* Search Trigger Button */}
+              <Button onClick={() => useSearch.open()}>Search a Pet</Button>
+            </div>
             <nav className="flex items-center space-x-1">
               <Menubar>
                 <MenubarMenu>
@@ -87,6 +94,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
               {/* MODAL */}
               <UserRegisterModal />
               <UserLoginModal />
+              <SearchModal />
               <RentModal />
               <Link
                 href={siteConfig.links.github}

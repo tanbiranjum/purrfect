@@ -12,14 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
+} from "../../ui/form"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../../ui/select"
 
 interface FormDistrictSelectProps {
   form: any
@@ -56,7 +56,7 @@ const FormDistrictSelect: React.FC<FormDistrictSelectProps> = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-40">
           <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={(value) => {

@@ -8,14 +8,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
+} from "../../ui/form"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select"
+} from "../../ui/select"
 
 interface FormDivisionSelectProps {
   form: any
@@ -38,7 +38,7 @@ const FormDivisionSelect: React.FC<FormDivisionSelectProps> = ({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-40">
           <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={(value) => {
