@@ -1,16 +1,16 @@
 import PetCard from "@/components/adoption-listing/adoption-card"
 import Hero from "@/components/home/hero"
 
-import getAdoptionListing, {
+import getAdoptionListings, {
   AdoptionListingParams,
-} from "./actions/get-adoption-listing"
+} from "./actions/get-adoption-listings"
 
 interface IndexPageProps {
   searchParams: AdoptionListingParams
 }
 
 export default async function IndexPage({ searchParams }: IndexPageProps) {
-  const adoptions = await getAdoptionListing(searchParams)
+  const adoptions = await getAdoptionListings(searchParams)
   return (
     <>
       <section>

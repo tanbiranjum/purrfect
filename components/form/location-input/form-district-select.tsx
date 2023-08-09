@@ -4,8 +4,6 @@
 import React, { useEffect, useState } from "react"
 import { District } from "bd-geojs/dist/data/districts"
 
-import { useLocation } from "@/hooks/use-location"
-
 import {
   FormControl,
   FormField,
@@ -20,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select"
+import { FetchLocation } from "@/lib/fetch-location"
 
 interface FormDistrictSelectProps {
   form: any
@@ -36,7 +35,7 @@ const FormDistrictSelect: React.FC<FormDistrictSelectProps> = ({
   divisionId,
   setDistrictId = () => {},
 }) => {
-  const { getDistricts } = useLocation()
+  const location =  new FetchLocation()
 
   const [districts, setDistricts] = useState<District[]>([])
 
@@ -49,7 +48,7 @@ const FormDistrictSelect: React.FC<FormDistrictSelectProps> = ({
   }
 
   useEffect(() => {
-    setDistricts(getDistricts(divisionId))
+    setDistricts(location.getDistricts(divisionId))
   }, [divisionId])
   return (
     <FormField

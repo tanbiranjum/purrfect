@@ -1,46 +1,16 @@
 import prisma from '@/lib/prismadb'
 
-export interface AdoptionListingParams {
-    category?: string
-    gender?: string
-    ownerId?: string
-    adopted?: boolean
-}
-
-export default async function getAdoptionListing(params: AdoptionListingParams) {
-    const { category, gender, ownerId, adopted } = params
-
-    let query: any = {}
-
-    if (adopted) {
-        query.adopted = adopted
-    }
-
-    if (category) {
-        query.category = category
-    }
-
-    if (gender) {
-        query.gender = gender
-    }
-
-    if (ownerId) {
-        query.ownerId = ownerId
-    }
-
+export default async function getAdoptionListing(id: string) {
 
     try {
-        const adoptionListing = await prisma?.adoptionApplication.findMany({
+        const adoptionListing = await prisma?.adoptionApplication.findUnique({
             include: {
                 applicant: true,
                 pet: true,
                 address: true
             },
             where: {
-                pet: query
-            },
-            orderBy: {
-                createdAt: 'desc'
+                id
             }
         })
 

@@ -17,7 +17,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
 }) => {
   return (
     <div className="group relative flex flex-col items-center justify-center rounded-sm border-2 border-pink-500 pb-4 shadow-sm">
-      <Link href={`/pet/${data.id}`}>
+      <Link href={`/adoption/${data.id}`}>
         <Image
           src={data.pet.imageSrc || ""}
           alt={data.pet.name || "pet image"}
@@ -29,7 +29,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
       <div className="mt-2 flex flex-col items-center justify-center">
         <Link href={`/pet/${data.id}`}>
           <Link
-            href={data.id}
+            href={`adoption/${data.id}`}
             className="text-xl font-bold text-gray-800 hover:underline"
           >
             {data.pet.name}
@@ -38,7 +38,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
         <span className="text-md text-gray-500">{data.pet.category}</span>
       </div>
       {data.adopted && (
-        <div className="absolute left-0 top-0 rounded-sm bg-black p-2 text-sm text-white">
+        <div className="absolute -left-6 top-0 -rotate-45 rounded-sm bg-pink-600 px-4 py-2  text-sm text-white">
           Adopted
         </div>
       )}

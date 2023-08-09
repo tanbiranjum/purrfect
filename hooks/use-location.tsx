@@ -13,6 +13,18 @@ export const useLocation = () => {
     return upazillas.filter((upazilla) => upazilla.district_id === districtId)
   }
 
+  const getDivisionName = (divisionId: string) => {
+    return divisions.find((division) => division.id === divisionId)?.name
+  }
+
+  const getDistrictName = (districtId: string) => {
+    return districts.find((district) => district.id === districtId)?.name
+  }
+
+  const getUpazillaName = (upazillaId: string) => {
+    return upazillas.find((upazilla) => upazilla.id === upazillaId)?.name
+  }
+
   return {
     getDivisions,
     getDistricts,

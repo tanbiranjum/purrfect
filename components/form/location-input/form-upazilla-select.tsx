@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Upazilla } from "bd-geojs/dist/data/upazillas"
 
-import { useLocation } from "@/hooks/use-location"
-
 import {
   FormControl,
   FormField,
@@ -17,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select"
+import { FetchLocation } from "@/lib/fetch-location"
 
 interface FormDistrictSelectProps {
   form: any
@@ -31,12 +30,12 @@ const FormUpazillaSelect: React.FC<FormDistrictSelectProps> = ({
   label,
   districtId,
 }) => {
-  const { getUpazillas } = useLocation()
+  const location = new FetchLocation()
   const [upazilla, setUpazilla] = useState<Upazilla[]>([])
 
   useEffect(() => {
-    setUpazilla(getUpazillas(districtId))
-  }, [districtId, getUpazillas])
+    setUpazilla(location.getUpazillas(districtId))
+  }, [districtId])
 
   const generateUpazilla = () => {
     return upazilla.map((upazilla) => (

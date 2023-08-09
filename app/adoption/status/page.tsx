@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 
 import PetCard from "@/components/adoption-listing/adoption-card"
-import getAdoptionListing from "@/app/actions/get-adoption-listing"
+import getAdoptionListing from "@/app/actions/get-adoption-listings"
 import getCurrentUser from "@/app/actions/get-current-user"
 import { SafeAdoptionListing } from "@/app/types"
 

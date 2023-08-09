@@ -1,7 +1,5 @@
 import React from "react"
 
-import { useLocation } from "@/hooks/use-location"
-
 import {
   FormControl,
   FormField,
@@ -16,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select"
+import { FetchLocation } from "@/lib/fetch-location"
 
 interface FormDivisionSelectProps {
   form: any
@@ -32,7 +31,7 @@ const FormDivisionSelect: React.FC<FormDivisionSelectProps> = ({
   divisionId,
   setDivisionId = () => {},
 }) => {
-  const { getDivisions } = useLocation()
+  const location = new FetchLocation()
   return (
     <FormField
       control={form.control}
@@ -53,7 +52,7 @@ const FormDivisionSelect: React.FC<FormDivisionSelectProps> = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {getDivisions().map((division) => (
+              {location.getDivisions().map((division) => (
                 <SelectItem
                   className="text-black"
                   key={division.id}
