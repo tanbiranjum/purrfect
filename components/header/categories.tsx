@@ -11,26 +11,31 @@ export const categories = [
   {
     icon: <Icons.cat />,
     label: "Find cat",
+    name: "cat",
     description: "Cute kitty cat",
   },
   {
     icon: <Icons.dog />,
     label: "Find dog",
+    name: "dog",
     description: "Your best friend and companion",
   },
   {
     icon: <Icons.rabbit />,
     label: "Find rabbit",
+    name: "rabbit",
     description: "Forest starts here",
   },
   {
     icon: <Icons.bird height="25"/>,
     label: "Find bird",
+    name: "bird",
     description: "Forest starts here",
   },
   {
     icon: <Icons.egg />,
     label: "others",
+    name: "others",
     description: "Tent starts here",
   },
 ]
@@ -83,14 +88,15 @@ const Categories = () => {
 
   return (
     <div>
-      <div className="container">
+      <div className="container py-6">
         <Slider {...settings}>
           {categories.map((item, i) => (
             <CategoryBox
               key={i}
+              name={item.name}
               label={item.label}
               icon={item.icon}
-              selected={category === item.label}
+              selected={category === item.name}
             />
           ))}
         </Slider>

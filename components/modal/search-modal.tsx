@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 
 import useSearchModal from "@/hooks/use-search-modal"
@@ -23,7 +25,7 @@ const SearchModal = () => {
       toggle={toggle}
       className="sm:max-w-4xl"
     >
-      <Search />
+      <Search modal={useSearch} />
     </Modal>
   )
 }

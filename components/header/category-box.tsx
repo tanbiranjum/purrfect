@@ -8,11 +8,12 @@ import { Separator } from "../ui/separator"
 
 interface CategoryBoxProps {
   label: string
+  name: string
   icon: React.ReactNode
   selected: boolean
 }
 
-const CategoryBox: React.FC<CategoryBoxProps> = ({ label, icon, selected }) => {
+const CategoryBox: React.FC<CategoryBoxProps> = ({ label, name, icon, selected }) => {
   const router = useRouter()
   const params = useSearchParams()
 
@@ -25,10 +26,10 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({ label, icon, selected }) => {
 
     const newQuery: any = {
       ...currentQuery,
-      category: label,
+      category: name,
     }
 
-    if (params?.get("category") === label) {
+    if (params?.get("category") === name) {
       delete newQuery.category
     }
 
@@ -46,9 +47,10 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({ label, icon, selected }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex w-32 cursor-pointer flex-col items-center justify-center p-4"
+      className="flex w-32 cursor-pointer flex-col items-center justify-center border p-4"
     >
       {icon}
+      <p className="hidden">{name}</p>
       <p>{label}</p>
       {selected ? (
         <Separator className="mx-auto mt-2 h-[2px] w-3/5 bg-slate-900" />

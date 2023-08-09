@@ -40,7 +40,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
   const useSearch = useSearchModal()
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-background">
+    <header className="top-0 z-40 w-full bg-background">
       <div className="border-b">
         <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
           <MainNav items={siteConfig.mainNav} />
