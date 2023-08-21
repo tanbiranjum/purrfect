@@ -63,7 +63,6 @@ model Pet {
 
   adoptionHistory     AdoptionHistory[]
   AdoptionApplication AdoptionApplication?
-  AdoptionRequest     AdoptionRequest?
 }
 
 model AdoptionApplication {
@@ -82,22 +81,23 @@ model AdoptionApplication {
   applicantId     String            @db.ObjectId
   addressId       String            @db.ObjectId
   AdoptionHistory AdoptionHistory[]
+  AdoptionRequest AdoptionRequest[]
 }
 
 model AdoptionRequest {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?
-  email     String?
-  phone     String?
-  message   String?
-  address   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  pet       Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
-  petId     String   @unique @db.ObjectId
+  id                    String               @id @default(auto()) @map("_id") @db.ObjectId
+  name                  String?
+  email                 String?
+  phone                 String?
+  message               String?
+  address               String?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  adoptionApplication   AdoptionApplication? @relation(fields: [adoptionApplicationId], references: [id])
+  adoptionApplicationId String?              @unique @db.ObjectId
 
   applicant   User   @relation(fields: [applicantId], references: [id])
-  applicantId String @db.ObjectId
+  applicantId String @unique @db.ObjectId
 }
 
 model AdoptionHistory {
