@@ -4,10 +4,9 @@
 import React, { useContext, useEffect, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
-import { District } from "bd-geojs/dist/data/districts"
-import { Upazilla } from "bd-geojs/dist/data/upazillas"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
+import { MapContainer, TileLayer, useMap } from "react-leaflet"
 import { z } from "zod"
 
 import { adoptionSchema } from "@/lib/validations/adoption"
@@ -15,6 +14,7 @@ import useAdoptionModal from "@/hooks/use-adoption-modal"
 import { SelectItem } from "@/components/ui/select"
 import { AuthContext } from "@/app/providers/auth-provider"
 
+import Address from "../address/address"
 import ImageUpload from "../form/Image-upload"
 import FormInput from "../form/form-input"
 import FormSelect from "../form/form-select"
@@ -206,7 +206,7 @@ const RentModal = () => {
       case STEPS.LOCATION:
         return (
           <>
-            <FormDivisionSelect
+            {/* <FormDivisionSelect
               form={form}
               name="division"
               label="Division"
@@ -225,7 +225,8 @@ const RentModal = () => {
               name="upazilla"
               label="Upazilla"
               districtId={districtId}
-            />
+            /> */}
+            <Address />
           </>
         )
       case STEPS.DESCRIPTION:

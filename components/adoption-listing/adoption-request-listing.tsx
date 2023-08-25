@@ -2,6 +2,7 @@
 
 import React from "react"
 import { AdoptionRequest } from "@prisma/client"
+import axios from "axios"
 
 import { Button } from "../ui/button"
 import {
@@ -17,10 +18,19 @@ interface AdoptionRequestListingParams {
 const AdoptionRequestListing: React.FC<AdoptionRequestListingParams> = ({
   adoptionRequestListings,
 }) => {
-  const handleConfirmAdoption = () => {
+  const handleConfirmAdoption = async (
+    requestId: string,
+    adoptionApplicationId: string,
+    userId: string
+  ) => {
     // 1. Update adoption status to "Adopted"
     // 2. Send email to the applicant
     // 3. Create a new adoption history
+    await axios.post("/api/adoption/request/confirm", {
+      adoptionRequestId: requestId,
+      adoptionApplicationId,
+      userId,
+    })
   }
   return (
     <div>
@@ -33,7 +43,17 @@ const AdoptionRequestListing: React.FC<AdoptionRequestListingParams> = ({
             <p className="text-md font-medium leading-loose text-gray-900">
               {request.message}
             </p>
-            <Button onClick={handleConfirmAdoption}>Confirm</Button>
+            <Button
+              onClick={() =>
+                handleConfirmAdoption(
+                  request.id,
+                  request.adoptionApplicationId as string,
+                  request.applicantId
+                )
+              }
+            >
+              Confirm
+            </Button>
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="rounded-b-md bg-white p-6">

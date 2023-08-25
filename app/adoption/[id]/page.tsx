@@ -15,9 +15,8 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
 
   let adoptionRequest: AdoptionRequest[] | void = []
 
-  if (adoption?.id === id) {
+  if (adoption?.id === id && !adoption.adopted) {
     adoptionRequest = await getAdoptionRequest(id)
-    console.log(adoptionRequest)
   }
 
   return (
@@ -125,7 +124,9 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
       )}
       <div>
         <h1 className="text-2xl font-bold">Requests</h1>
-        <AdoptionRequestListing adoptionRequestListings={adoptionRequest} />
+        {!adoption?.adopted && (
+          <AdoptionRequestListing adoptionRequestListings={adoptionRequest} />
+        )}
       </div>
     </div>
   )
