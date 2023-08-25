@@ -19,9 +19,9 @@ export async function POST(request: Request) {
 
         const newAddress = await prisma?.address.create({
             data: {
-                division: values.division,
-                district: values.district,
-                upazilla: values.upazilla,
+                address: values.address,
+                lat: values.lat,
+                lon: values.lon,
             },
         })
 

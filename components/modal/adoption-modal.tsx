@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
-import { MapContainer, TileLayer, useMap } from "react-leaflet"
 import { z } from "zod"
 
 import { adoptionSchema } from "@/lib/validations/adoption"
@@ -18,9 +17,6 @@ import Address from "../address/address"
 import ImageUpload from "../form/Image-upload"
 import FormInput from "../form/form-input"
 import FormSelect from "../form/form-select"
-import FormDistrictSelect from "../form/location-input/form-district-select"
-import FormDivisionSelect from "../form/location-input/form-division-select"
-import FormUpazillaSelect from "../form/location-input/form-upazilla-select"
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
@@ -37,8 +33,6 @@ enum STEPS {
 const RentModal = () => {
   const useAdoption = useAdoptionModal()
   const [step, setStep] = useState(STEPS.INFO)
-  const [divisionId, setDivisionId] = useState<string>("1")
-  const [districtId, setDistrictId] = useState<string>("1")
   const currentUser = useContext(AuthContext)
 
   const form = useForm<z.infer<typeof adoptionSchema>>({
@@ -52,15 +46,16 @@ const RentModal = () => {
       ownerName: "",
       ownerPhone: "",
       ownerEmail: "",
-      division: "1",
-      district: "1",
-      upazilla: "1",
+      address: "",
+      lat: 0,
+      lon: 0,
       description: "",
     },
   })
 
   const category = form.watch("category")
   const imageSrc = form.watch("imageSrc")
+  const searchText = form.watch("address")
 
   const setCustomValue = (id: any, value: any) => {
     form.setValue(id, value, {
@@ -116,6 +111,7 @@ const RentModal = () => {
 
   const onSubmit = async (values: z.infer<typeof adoptionSchema>) => {
     try {
+      console.log("Hellloooo")
       const adoption = await axios.post("/api/adoption", {
         values,
         currentUser,
@@ -206,27 +202,14 @@ const RentModal = () => {
       case STEPS.LOCATION:
         return (
           <>
-            {/* <FormDivisionSelect
+            <Address
+              name="address"
               form={form}
-              name="division"
-              label="Division"
-              divisionId={divisionId}
-              setDivisionId={setDivisionId}
+              label="Address"
+              searchText={searchText}
+              placeholder="Enter your address here"
+              includeMap={true}
             />
-            <FormDistrictSelect
-              form={form}
-              name="district"
-              label="District"
-              divisionId={divisionId}
-              setDistrictId={setDistrictId}
-            />
-            <FormUpazillaSelect
-              form={form}
-              name="upazilla"
-              label="Upazilla"
-              districtId={districtId}
-            /> */}
-            <Address />
           </>
         )
       case STEPS.DESCRIPTION:
@@ -257,6 +240,7 @@ const RentModal = () => {
             if (step < STEPS.DESCRIPTION) {
               onNext()
             } else {
+              console.log(form.getValues())
               form.handleSubmit(onSubmit)()
             }
           }}

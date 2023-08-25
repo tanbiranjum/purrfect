@@ -9,8 +9,8 @@ export const adoptionSchema = z.object({
     ownerName: z.string().min(3).max(100),
     ownerPhone: z.string().min(3).max(100),
     ownerEmail: z.string().email(),
-    division: z.string().min(1),
-    district: z.string().min(1),
-    upazilla: z.string().min(1),
+    address: z.string().min(3).max(200),
+    lat: z.number().min(3).max(100),
+    lon: z.number().min(3).max(100),
     description: z.string().min(3).max(500),
 })

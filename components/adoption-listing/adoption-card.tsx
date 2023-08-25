@@ -27,7 +27,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
         />
       </Link>
       <div className="mt-2 flex flex-col items-center justify-center">
-        <Link href={`/pet/${data.id}`}>
+        <Link href={`/adoption/${data.id}`}>
           <Link
             href={`adoption/${data.id}`}
             className="text-xl font-bold text-gray-800 hover:underline"

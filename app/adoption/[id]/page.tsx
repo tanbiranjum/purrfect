@@ -11,7 +11,6 @@ import getAdoptionRequest from "@/app/actions/get-adoption-request"
 const AdoptionPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params
   const adoption = await getAdoptionListing(id)
-  const location = new FetchLocation()
 
   let adoptionRequest: AdoptionRequest[] | void = []
 
@@ -91,22 +90,12 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
               <h1 className="text-2xl font-bold">Address</h1>
               <div className="flex gap-2">
                 <p className="text-md text-gray-500">
-                  {location.getDivisionName(
-                    adoption?.address.division as string
-                  )}{" "}
-                  {" - "}
+                  {adoption?.address.address} {" - "}
                 </p>
                 <p className="text-md text-gray-500">
-                  {location.getDistrictName(
-                    adoption?.address.district as string
-                  )}{" "}
-                  {" - "}
+                  {adoption?.address.lat} {" - "}
                 </p>
-                <p className="text-md text-gray-500">
-                  {location.getUpazillaName(
-                    adoption?.address.upazilla as string
-                  )}
-                </p>
+                <p className="text-md text-gray-500">{adoption?.address.lon}</p>
               </div>
             </div>
           </div>

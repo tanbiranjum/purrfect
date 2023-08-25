@@ -127,9 +127,9 @@ model VerificationToken {
 
 model Address {
   id                  String                @id @default(auto()) @map("_id") @db.ObjectId
-  division            String
-  district            String
-  upazilla            String?
+  address             String
+  lon                 Float
+  lat                 Float
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   AdoptionApplication AdoptionApplication[]
