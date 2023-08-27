@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react"
 
 import Map from "../map/map"
-import { Button } from "../ui/button"
 import {
   FormControl,
   FormField,
@@ -35,33 +34,36 @@ const Address = ({
   const [location, setLocation] = useState([51.505, -0.09])
   const [addresses, setAddresses] = useState([])
   const [suggestionDisplay, setSuggestionDisplay] = useState(false)
-  const [selectedAddress, setSelectedAddress] = useState(searchText || "")
-  const [isSelected, setIsSelected] = useState(searchText !== "")
+  const [selectedAddress, setSelectedAddress] = useState(searchText)
+  const [selected, setSelected] = useState(false)
 
   useEffect(() => {
     const getLocation = setTimeout(() => {
-      const params = {
-        q: searchText,
-        format: "json",
-        addressdetails: "1",
-        polygon_geojson: "0",
+      if(searchText !== selectedAddress) {
+        const params = {
+          q: searchText,
+          format: "json",
+          addressdetails: "1",
+          polygon_geojson: "0",
+        }
+  
+        const queryString = new URLSearchParams(params).toString()
+  
+        fetch(`${BASE_URL}${queryString}`)
+          .then((response) => response.text())
+          .then((result) => {
+            setAddresses(JSON.parse(result))
+            setSelected(false)
+            setSuggestionDisplay(true)
+          })
       }
-
-      const queryString = new URLSearchParams(params).toString()
-
-      fetch(`${BASE_URL}${queryString}`)
-        .then((response) => response.text())
-        .then((result) => {
-          setAddresses(JSON.parse(result))
-          setSuggestionDisplay(true)
-        })
     }, 2000)
 
     return () => clearTimeout(getLocation)
   }, [searchText])
 
   const handleAddressSelect = (address: any) => {
-    setIsSelected(true)
+    setSelected(true)
     setSelectedAddress(address.display_name)
     form.setValue("address", address.display_name)
     form.setValue("lat", address.lat * 1)
@@ -73,8 +75,7 @@ const Address = ({
   return (
     <div>
       <div className="relative">
-        {!isSelected ? (
-          <FormField
+      <FormField
             control={form.control}
             name={name}
             render={({ field }) => (
@@ -91,17 +92,7 @@ const Address = ({
               </FormItem>
             )}
           />
-        ) : (
-          <>
-            <div className="rounded-sm border bg-slate-300 p-2">
-              <p>{selectedAddress}</p>
-            </div>
-            <Button className="mt-2" onClick={() => setIsSelected(false)}>
-              Reset
-            </Button>
-          </>
-        )}
-        {suggestionDisplay && !isSelected && (
+        {suggestionDisplay && (
           <div className="absolute left-0 top-full z-50 rounded-lg">
             {addresses?.map((address: any) => (
               <div
@@ -114,7 +105,11 @@ const Address = ({
           </div>
         )}
       </div>
-      <div className="mt-6">{includeMap && <Map location={location} />}</div>
+      {includeMap && (
+        <div className="mt-6">
+          <Map location={location} />
+        </div>
+      )}
     </div>
   )
 }

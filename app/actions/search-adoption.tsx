@@ -2,13 +2,12 @@ import prisma from "@/lib/prismadb"
 
 export interface SearchParams {
   category: string
-  division?: string
-  district?: string
-  upazilla?: string
+  lat: number
+  lon: number
 }
 
 export default async function getSearchedAdoptions(searchParams: SearchParams) {
-  const { category, division, district, upazilla } = searchParams
+  const { category, lat, lon } = searchParams
   const adoptions = await prisma.adoptionApplication.findMany({
     where: {
       pet: {
@@ -16,23 +15,24 @@ export default async function getSearchedAdoptions(searchParams: SearchParams) {
           equals: category,
         },
       },
+      // search within 10km radius
       address: {
-        division: {
-          equals: division,
+        lat: {
+          lte: lat * 1 + 0.1,
+          gte: lat * 1 - 0.1,
         },
-        district: {
-          equals: district,
-        },
-        upazilla: {
-          equals: upazilla,
+        lon: {
+          lte: lon * 1 + 0.1,
+          gte: lon * 1 - 0.1,
         },
       },
     },
     include: {
-        pet: true,
-        address: true,
-        applicant: true,
-    }
+      pet: true,
+      address: true,
+      applicant: true,
+    },
   })
+
   return adoptions
 }

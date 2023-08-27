@@ -6,23 +6,31 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import FormLocationSelect from "../form/location-input/form-location-select"
+import Address from "../address/address"
 import PetCategorySelect from "../form/pet-category-select"
 import { Button } from "../ui/button"
 import { Form } from "../ui/form"
 
 const SearchSchema = z.object({
   category: z.string().min(1).max(255),
-  division: z.string().optional(),
-  district: z.string().optional(),
-  upazilla: z.string().optional(),
+  address: z.string().min(1).max(255),
+  lat: z.number().min(-90).max(90),
+  lon: z.number().min(-180).max(180),
 })
 
 const Search = ({ modal }: { modal?: any }) => {
   const router = useRouter()
   const form = useForm<z.infer<typeof SearchSchema>>({
     resolver: zodResolver(SearchSchema),
+    defaultValues: {
+      category: "",
+      address: "",
+      lat: 0,
+      lon: 0,
+    }
   })
+
+  const searchText = form.watch("address")
 
   const onSubmit = (values: z.infer<typeof SearchSchema>) => {
     // build a query string
@@ -30,14 +38,11 @@ const Search = ({ modal }: { modal?: any }) => {
     if (values.category) {
       query += `category=${values.category}`
     }
-    if (values.division) {
-      query += `&division=${values.division}`
+    if (values.lat) {
+      query += `&lat=${values.lat}`
     }
-    if (values.district) {
-      query += `&district=${values.district}`
-    }
-    if (values.upazilla) {
-      query += `&upazilla=${values.upazilla}`
+    if (values.lon) {
+      query += `&lon=${values.lon}`
     }
 
     if (modal && modal.isOpen) {
@@ -59,7 +64,14 @@ const Search = ({ modal }: { modal?: any }) => {
             placeholder="Select Pet"
             label="Pet"
           />
-          <FormLocationSelect form={form} />
+          <Address
+            includeMap={false}
+            form={form}
+            name="address"
+            placeholder="Where you want to search?"
+            label="Location"
+            searchText={searchText}
+          />
           <Button type="submit">Search</Button>
         </form>
       </Form>

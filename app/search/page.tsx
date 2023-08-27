@@ -7,9 +7,8 @@ import getSearchedAdoptions from "../actions/search-adoption"
 interface SearchPageParams {
   searchParams: {
     category: string
-    division?: string
-    district?: string
-    upazilla?: string
+    lat: number
+    lon: number
   }
 }
 
