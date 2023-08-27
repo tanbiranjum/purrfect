@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -19,6 +19,7 @@ const SearchSchema = z.object({
 })
 
 const Search = ({ modal }: { modal?: any }) => {
+  const [validAddress, setValidAddress] = useState(false)
   const router = useRouter()
   const form = useForm<z.infer<typeof SearchSchema>>({
     resolver: zodResolver(SearchSchema),
@@ -71,8 +72,9 @@ const Search = ({ modal }: { modal?: any }) => {
             placeholder="Where you want to search?"
             label="Location"
             searchText={searchText}
+            validAddress={setValidAddress}
           />
-          <Button type="submit">Search</Button>
+          <Button type="submit" disabled={!validAddress}>Search</Button>
         </form>
       </Form>
     </div>

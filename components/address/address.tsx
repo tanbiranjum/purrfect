@@ -19,6 +19,7 @@ type Props = {
   label: string
   placeholder: string
   searchText: string
+  validAddress: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const BASE_URL = "https://nominatim.openstreetmap.org/search?"
@@ -30,16 +31,28 @@ const Address = ({
   label,
   placeholder,
   searchText,
+  validAddress
 }: Props) => {
   const [location, setLocation] = useState([51.505, -0.09])
   const [addresses, setAddresses] = useState([])
   const [suggestionDisplay, setSuggestionDisplay] = useState(false)
-  const [selectedAddress, setSelectedAddress] = useState(searchText)
+  const [selectedAddress, setSelectedAddress] = useState({
+    address: searchText,
+    lat: -1,
+    lon: -1
+  })
   const [selected, setSelected] = useState(false)
 
   useEffect(() => {
+    // check if the address valid
+    if(selectedAddress.lat === -1 && selectedAddress.lon === -1) {
+      validAddress(false)
+    }
+    else {
+      validAddress(true)
+    }
     const getLocation = setTimeout(() => {
-      if(searchText !== selectedAddress) {
+      if(searchText !== selectedAddress.address) {
         const params = {
           q: searchText,
           format: "json",
@@ -64,7 +77,11 @@ const Address = ({
 
   const handleAddressSelect = (address: any) => {
     setSelected(true)
-    setSelectedAddress(address.display_name)
+    setSelectedAddress({
+      address: address.display_name,
+      lat: address.lat * 1,
+      lon: address.lon * 1
+    })
     form.setValue("address", address.display_name)
     form.setValue("lat", address.lat * 1)
     form.setValue("lon", address.lon * 1)
