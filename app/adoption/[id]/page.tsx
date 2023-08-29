@@ -33,7 +33,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
         <div className="col-span-5 md:col-span-2">
           <div className="h-full space-y-4">
             <div className="rounded-md border bg-white p-6">
-              <h1 className="text-2xl font-bold">{adoption?.pet.name}</h1>
+              <h1 className="text-2xl font-semibold">{adoption?.pet.name}</h1>
               <div className="flex">
                 <div className="w-5/12">
                   <p className="text-md font-medium leading-loose text-gray-900">
@@ -60,7 +60,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
               </div>
             </div>
             <div className="rounded-md border bg-white p-6">
-              <h1 className="text-2xl font-bold">Owner</h1>
+              <h1 className="text-2xl font-semibold">Contact</h1>
               <div className="flex">
                 <div className="w-5/12">
                   <p className="text-md font-medium leading-loose text-gray-900">
@@ -87,15 +87,11 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
               </div>
             </div>
             <div className="rounded-md border bg-white p-6">
-              <h1 className="text-2xl font-bold">Address</h1>
-              <div className="flex gap-2">
+              <h1 className="text-2xl font-semibold">Location</h1>
+              <div className="flex">
                 <p className="text-md text-gray-500">
-                  {adoption?.address.address} {" - "}
+                  {adoption?.address.address}
                 </p>
-                <p className="text-md text-gray-500">
-                  {adoption?.address.lat} {" - "}
-                </p>
-                <p className="text-md text-gray-500">{adoption?.address.lon}</p>
               </div>
             </div>
           </div>
@@ -103,7 +99,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
       </div>
       {/* Description */}
       <div className="rounded-md border bg-white p-6">
-        <h1 className="text-2xl font-bold">Description</h1>
+        <h1 className="text-2xl font-semibold">Description</h1>
         <p className="text-md text-gray-500">{adoption?.pet.description}</p>
       </div>
       {id === adoption?.id ? (
@@ -112,7 +108,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
         <ApplyForm adoptionId={adoption?.id as string} />
       )}
       <div>
-        <h1 className="text-2xl font-bold">Requests</h1>
+        <h1 className="text-2xl font-semibold">Requests</h1>
         {!adoption?.adopted && (
           <AdoptionRequestListing adoptionRequestListings={adoptionRequest} />
         )}

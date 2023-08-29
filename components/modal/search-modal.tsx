@@ -23,7 +23,7 @@ const SearchModal = () => {
       name="Search"
       isOpen={useSearch.isOpen}
       toggle={toggle}
-      className="sm:max-w-4xl"
+      className=""
     >
       <Search modal={useSearch} />
     </Modal>

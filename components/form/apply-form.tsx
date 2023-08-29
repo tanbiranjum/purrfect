@@ -7,26 +7,27 @@ import axios from "axios"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
+import Address from "../address/address"
 import { Button } from "../ui/button"
 import { Form } from "../ui/form"
 import FormInput from "./form-input"
-import FormLocationSelect from "./location-input/form-location-select"
 
 const ApplyAdoptionSchema = z.object({
   name: z.string().min(1).max(255),
   phone: z.string().min(1).max(255),
   email: z.string().min(1).max(255),
   message: z.string().min(1).max(255),
-  division: z.string().optional(),
-  district: z.string().optional(),
-  upazilla: z.string().optional(),
+  address: z.string().min(10).max(255),
 })
 
 const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
-  const [applied, setApplied] = React.useState(false)
+  const [applied, setApplied] = useState(false)
+  const [validAddress, setValidAddress] = useState(false)
   const form = useForm<z.infer<typeof ApplyAdoptionSchema>>({
     resolver: zodResolver(ApplyAdoptionSchema),
   })
+
+  const searchText = form.watch("address")
 
   const handleCheck = async () => {
     const { data } = await axios.get(`/api/adoption/request/${adoptionId}`)
@@ -79,7 +80,15 @@ const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
             label="Message"
             placeholder="message to owner"
           />
-          <FormLocationSelect form={form} />
+          <Address
+            form={form}
+            name="address"
+            label="Location"
+            placeholder="Location"
+            includeMap={false}
+            searchText={searchText}
+            validAddress={setValidAddress}
+          />
           {applied ? (
             <p className="text-xl">You have already applied!</p>
           ) : (

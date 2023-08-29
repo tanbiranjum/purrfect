@@ -35,7 +35,7 @@ const PetCategorySelect: React.FC<FormSelectProps> = ({
       render={({ field }) => (
         <FormItem className="w-40">
           <FormLabel>{label}</FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />

@@ -13,13 +13,13 @@ import {
 import { Input } from "../ui/input"
 
 type Props = {
-  form: any
+  form?: any
   includeMap?: boolean
   name: string
-  label: string
+  label?: string
   placeholder: string
   searchText: string
-  validAddress: React.Dispatch<React.SetStateAction<boolean>>
+  validAddress?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const BASE_URL = "https://nominatim.openstreetmap.org/search?"
@@ -46,10 +46,10 @@ const Address = ({
   useEffect(() => {
     // check if the address valid
     if(selectedAddress.lat === -1 && selectedAddress.lon === -1) {
-      validAddress(false)
+      validAddress && validAddress(false)
     }
     else {
-      validAddress(true)
+      validAddress && validAddress(true)
     }
     const getLocation = setTimeout(() => {
       if(searchText !== selectedAddress.address) {

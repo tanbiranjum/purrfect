@@ -1,33 +1,34 @@
-import { districts, divisions, upazillas } from "bd-geojs"
+"use client"
+import { useEffect, useState } from "react"
 
-export const useLocation = () => {
-  const getDivisions = () => {
-    return divisions
+type Props = {
+  searchText: string
+}
+
+export const useLocation = ({ searchText }: Props) => {
+  const [address, setAddress] = useState(searchText)
+  const [isValid, setIsValid] = useState(false)
+  const [location, setLocation] = useState({
+    lat: -1,
+    lon: -1,
+  })
+
+  const checkValid = ()=> {
+    if(location.lat === -1 && location.lon === -1) {
+      return setIsValid(false)
+    }
+    return setIsValid(true)
   }
 
-  const getDistricts = (divisionId: string) => {
-    return districts.filter((district) => district.division_id === divisionId)
-  }
-
-  const getUpazillas = (districtId: string) => {
-    return upazillas.filter((upazilla) => upazilla.district_id === districtId)
-  }
-
-  const getDivisionName = (divisionId: string) => {
-    return divisions.find((division) => division.id === divisionId)?.name
-  }
-
-  const getDistrictName = (districtId: string) => {
-    return districts.find((district) => district.id === districtId)?.name
-  }
-
-  const getUpazillaName = (upazillaId: string) => {
-    return upazillas.find((upazilla) => upazilla.id === upazillaId)?.name
-  }
+  useEffect(()=> {
+    checkValid()
+  }, [address])
 
   return {
-    getDivisions,
-    getDistricts,
-    getUpazillas,
+    address,
+    setAddress,
+    location,
+    setLocation,
+    isValid
   }
 }
