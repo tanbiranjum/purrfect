@@ -91,6 +91,7 @@ model AdoptionRequest {
   message               String?
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
+  accepted              Boolean              @default(false)
   adoptionApplication   AdoptionApplication? @relation(fields: [adoptionApplicationId], references: [id])
   adoptionApplicationId String?              @unique @db.ObjectId
 

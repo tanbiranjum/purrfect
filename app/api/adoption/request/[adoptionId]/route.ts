@@ -1,3 +1,4 @@
+import { getAdoptionRequestByUser } from "@/app/actions/get-adoption-request";
 import getCurrentUser from "@/app/actions/get-current-user";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -5,18 +6,13 @@ export async function GET(request: NextRequest, { params }: { params: { adoption
     const adoptionId = params.adoptionId
     const currentUser = await getCurrentUser()
 
-    const adoptionApplication = await prisma?.adoptionRequest.findFirst({
-        where: {
-            adoptionApplicationId: adoptionId as string,
-            applicantId: currentUser?.id as string,
-        }
-    })
+    const adoptionApplication = await getAdoptionRequestByUser(currentUser?.id as string, adoptionId)
 
     if (!adoptionApplication) {
         return NextResponse.json({
             message: 'not found'
         }, {
-            status: 404,
+            status: 200,
         })
     }
 

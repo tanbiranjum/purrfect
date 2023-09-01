@@ -5,7 +5,9 @@ import { AdoptionRequest } from "@prisma/client"
 import AdoptionRequestListing from "@/components/adoption-listing/adoption-request-listing"
 import ApplyForm from "@/components/form/apply-form"
 import getAdoptionListing from "@/app/actions/get-adoption-listing"
-import getAdoptionRequest from "@/app/actions/get-adoption-request"
+import getAdoptionRequest, {
+  getAdoptionRequestByUser,
+} from "@/app/actions/get-adoption-request"
 import getCurrentUser from "@/app/actions/get-current-user"
 
 const AdoptionPage = async ({ params }: { params: { id: string } }) => {
@@ -15,12 +17,14 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
 
   const isOwner = adoption?.applicantId === user?.id ? true : false
 
-  let adoptionRequest: AdoptionRequest[] | void = []
+  let adoptionRequests: AdoptionRequest[] | void = []
+  let adoptionRequest: AdoptionRequest | void
 
-  if (!isOwner) {
-    adoptionRequest = await getAdoptionRequest(id)
+  if (isOwner) {
+    adoptionRequests = await getAdoptionRequest(id)
+  } else {
+    adoptionRequest = await getAdoptionRequestByUser(user?.id as string, id)
   }
-
   return (
     <div className="container">
       <div className="grid grid-cols-5 gap-10 pb-8 pt-6 md:py-10">
@@ -28,7 +32,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
           <div className="bg-white p-4 rounded-md">
             <Image
               src={adoption?.pet.imageSrc as string}
-              alt=""
+              alt="pet image"
               width={500}
               height={500}
               className="rounded-md"
@@ -107,10 +111,27 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
         <h1 className="text-2xl font-semibold">Description</h1>
         <p className="text-md text-gray-500">{adoption?.pet.description}</p>
       </div>
-      {!isOwner && <ApplyForm adoptionId={adoption?.id as string} />}
+      <div className="mt-4">
+        {!isOwner &&
+          (adoptionRequest ? (
+            <div className="p-6 bg-white rounded-md">
+              <p>You have applied already</p>
+              <div className="flex items-center">
+                Status:{" "}
+                {adoptionRequest.accepted ? (
+                  <p className="text-green-500 font-semibold p-1">Accepted</p>
+                ) : (
+                  <p className="text-yellow-500 font-semibold p-1">Pending</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            <ApplyForm adoptionId={adoption?.id as string} />
+          ))}
+      </div>
       {isOwner && (
         <div className="mt-4">
-          <AdoptionRequestListing adoptionRequestListings={adoptionRequest} />
+          <AdoptionRequestListing adoptionRequestListings={adoptionRequests} />
         </div>
       )}
     </div>

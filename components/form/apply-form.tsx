@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { useForm } from "react-hook-form"
@@ -18,7 +18,6 @@ const ApplyAdoptionSchema = z.object({
   phone: z.string().min(1).max(255),
   email: z.string().min(1).max(255),
   message: z.string().min(1).max(255),
-  address: z.string().min(10).max(255),
 })
 
 const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
@@ -30,26 +29,19 @@ const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
     resolver: zodResolver(ApplyAdoptionSchema),
   })
 
-  const handleCheck = async () => {
-    const { data } = await axios.get(`/api/adoption/request/${adoptionId}`)
-    console.log(data)
-    if (data.message === "success") {
-      setApplied(true)
-    }
-  }
-
-  useEffect(() => {
-    handleCheck()
-  }, [])
-
   const onSubmit = async (values: z.infer<typeof ApplyAdoptionSchema>) => {
     const { data } = await axios.post("/api/adoption/request", {
       ...values,
       adoptionId,
       address: formLocation,
     })
+    
+
+    if(JSON.parse(data).message === 'success') {
+      setApplied(true)
+    }
   }
-  
+
   return (
     <div className="flex gap-2 rounded-md bg-white p-6">
       {applied ? (
@@ -65,25 +57,29 @@ const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
               name="name"
               label="Your name"
               placeholder="name"
+              className="h-16"
             />
             <FormInput
               form={form}
               name="phone"
               label="Phone number"
               placeholder="phone number"
+              className="h-16"
             />
             <FormInput
               form={form}
               name="email"
               label="Email"
               type="email"
-              placeholder="name"
+              placeholder="john@mail.com"
+              className="h-16"
             />
             <FormInput
               form={form}
               name="message"
               label="Message"
               placeholder="message to owner"
+              className="h-16"
             />
             <AddressNew {...formLocation} />
             <Button
