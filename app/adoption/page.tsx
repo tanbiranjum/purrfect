@@ -1,13 +1,16 @@
 import React from "react"
+
+import AdoptionCard from "@/components/adoption-listing/adoption-card"
 import SearchFilter from "@/components/search/search-filter"
+
 import getSearchedAdoptions from "../actions/search-adoption"
 
 interface AdoptionPageProps {
   searchParams: {
-    category?: string,
-    age?: string,
-    gender?: string,
-    lat?: number,
+    category?: string
+    age?: string
+    gender?: string
+    lat?: number
     lon?: number
   }
 }
@@ -15,10 +18,15 @@ interface AdoptionPageProps {
 const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
   const adoptions = await getSearchedAdoptions(searchParams)
   console.log(adoptions)
-  
+
   return (
-    <div className="mx-auto max-w-screen-lg">
-        <SearchFilter/>
+    <div className="container">
+      <SearchFilter />
+      <div className="grid grid-cols-5 gap-6 pb-8 pt-6 md:py-10">
+        {adoptions?.map((adoption) => (
+          <AdoptionCard key={adoption.id} data={adoption} />
+        ))}
+      </div>
     </div>
   )
 }

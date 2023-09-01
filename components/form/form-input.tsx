@@ -15,6 +15,7 @@ interface FormInputProps {
   label: string
   placeholder: string
   type?: string
+  className?: string
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -23,6 +24,7 @@ const FormInput: React.FC<FormInputProps> = ({
   label,
   type = "text",
   placeholder,
+  className
 }) => {
   return (
     <FormField
@@ -32,7 +34,7 @@ const FormInput: React.FC<FormInputProps> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type={type} placeholder={placeholder} {...field} />
+            <Input type={type} placeholder={placeholder} {...field} className={className}/>
           </FormControl>
           <FormMessage />
         </FormItem>

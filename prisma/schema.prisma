@@ -89,7 +89,6 @@ model AdoptionRequest {
   email                 String?
   phone                 String?
   message               String?
-  address               String?
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
   adoptionApplication   AdoptionApplication? @relation(fields: [adoptionApplicationId], references: [id])
@@ -97,6 +96,8 @@ model AdoptionRequest {
 
   applicant       User             @relation(fields: [applicantId], references: [id])
   applicantId     String           @unique @db.ObjectId
+  addressId       String           @db.ObjectId
+  address         Address          @relation(fields: [addressId], references: [id])
   AdoptionHistory AdoptionHistory?
 }
 
@@ -133,4 +134,5 @@ model Address {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   AdoptionApplication AdoptionApplication[]
+  AdoptionRequest     AdoptionRequest[]
 }

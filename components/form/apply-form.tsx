@@ -7,7 +7,8 @@ import axios from "axios"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import Address from "../address/address"
+import { useLocation } from "@/hooks/use-location"
+import AddressNew from "../address/address-new"
 import { Button } from "../ui/button"
 import { Form } from "../ui/form"
 import FormInput from "./form-input"
@@ -21,13 +22,13 @@ const ApplyAdoptionSchema = z.object({
 })
 
 const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
+  const formLocation = useLocation({
+    searchText: "",
+  })
   const [applied, setApplied] = useState(false)
-  const [validAddress, setValidAddress] = useState(false)
   const form = useForm<z.infer<typeof ApplyAdoptionSchema>>({
     resolver: zodResolver(ApplyAdoptionSchema),
   })
-
-  const searchText = form.watch("address")
 
   const handleCheck = async () => {
     const { data } = await axios.get(`/api/adoption/request/${adoptionId}`)
@@ -45,63 +46,56 @@ const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
     const { data } = await axios.post("/api/adoption/request", {
       ...values,
       adoptionId,
+      address: formLocation,
     })
-    console.log(data)
   }
+  
   return (
-    <div className="flex gap-2 rounded-md ">
-      <Form {...form}>
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
-          <FormInput
-            form={form}
-            name="name"
-            label="Your name"
-            placeholder="name"
-          />
-          <FormInput
-            form={form}
-            name="phone"
-            label="Phone number"
-            placeholder="phone number"
-          />
-          <FormInput
-            form={form}
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="name"
-          />
-          <FormInput
-            form={form}
-            name="message"
-            label="Message"
-            placeholder="message to owner"
-          />
-          <Address
-            form={form}
-            name="address"
-            label="Location"
-            placeholder="Location"
-            includeMap={false}
-            searchText={searchText}
-            validAddress={setValidAddress}
-          />
-          {applied ? (
-            <p className="text-xl">You have already applied!</p>
-          ) : (
+    <div className="flex gap-2 rounded-md bg-white p-6">
+      {applied ? (
+        <p className="text-xl">You have already applied!</p>
+      ) : (
+        <Form {...form}>
+          <form
+            className="flex flex-col gap-3"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormInput
+              form={form}
+              name="name"
+              label="Your name"
+              placeholder="name"
+            />
+            <FormInput
+              form={form}
+              name="phone"
+              label="Phone number"
+              placeholder="phone number"
+            />
+            <FormInput
+              form={form}
+              name="email"
+              label="Email"
+              type="email"
+              placeholder="name"
+            />
+            <FormInput
+              form={form}
+              name="message"
+              label="Message"
+              placeholder="message to owner"
+            />
+            <AddressNew {...formLocation} />
             <Button
               type="submit"
               disabled={applied}
               className="mt-4 p-6 text-xl"
             >
-              Apply to Adopt
+              Apply
             </Button>
-          )}
-        </form>
-      </Form>
+          </form>
+        </Form>
+      )}
     </div>
   )
 }

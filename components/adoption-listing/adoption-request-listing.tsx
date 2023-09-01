@@ -18,10 +18,12 @@ interface AdoptionRequestListingParams {
 const AdoptionRequestListing: React.FC<AdoptionRequestListingParams> = ({
   adoptionRequestListings,
 }) => {
+
   const handleConfirmAdoption = async (
     requestId: string,
     adoptionApplicationId: string,
     userId: string
+
   ) => {
     // 1. Update adoption status to "Adopted"
     // 2. Send email to the applicant
@@ -33,7 +35,11 @@ const AdoptionRequestListing: React.FC<AdoptionRequestListingParams> = ({
     })
   }
   return (
-    <div>
+    <div className="bg-white p-4">
+      <h1 className="text-2xl font-semibold">Requests</h1>
+      {adoptionRequestListings?.length === 0 && (
+        <div>No request found!</div>
+      )}
       {adoptionRequestListings?.map((request) => (
         <Collapsible>
           <CollapsibleTrigger className="flex w-full gap-6 rounded-t-md bg-white p-4">

@@ -16,12 +16,12 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
   actionButton = false,
 }) => {
   return (
-    <div className="group relative flex flex-col items-center justify-center rounded-sm border-2 border-pink-500 pb-4 shadow-sm">
+    <div className="group relative flex flex-col items-center justify-center rounded-sm border-2 p-4 bg-white shadow-sm">
       <Link href={`/adoption/${data.id}`}>
         <Image
           src={data.pet.imageSrc || ""}
           alt={data.pet.name || "pet image"}
-          className="aspect-square h-full w-full rounded-t-sm object-cover transition group-hover:scale-90"
+          className="aspect-square h-full w-full object-cover rounded-sm transition group-hover:scale-90"
           width={200}
           height={200}
         />
@@ -30,12 +30,13 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
         <Link href={`/adoption/${data.id}`}>
           <Link
             href={`adoption/${data.id}`}
-            className="text-xl font-bold text-gray-800 hover:underline"
+            className="flex items-baseline gap-2 text-gray-800 hover:underline"
           >
-            {data.pet.name}
+              <p className="text-xl font-semibold">{data.pet.name}</p>
+              <p className="text-sm">- {data.pet.age} year old</p>
           </Link>
         </Link>
-        <span className="text-md text-gray-500">{data.pet.category}</span>
+        {/* <span className="text-md text-gray-500">{data.pet.category}</span> */}
       </div>
       {data.adopted && (
         <div className="absolute -left-6 top-0 -rotate-45 rounded-sm bg-pink-600 px-4 py-2  text-sm text-white">
