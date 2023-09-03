@@ -12,8 +12,10 @@ import getCurrentUser from "@/app/actions/get-current-user"
 
 const AdoptionPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params
-  const adoption = await getAdoptionListing(id)
-  const user = await getCurrentUser()
+  const adoptionData = getAdoptionListing(id)
+  const userData = getCurrentUser()
+
+  const [adoption, user] = await Promise.all([adoptionData, userData])
 
   const isOwner = adoption?.applicantId === user?.id ? true : false
 
@@ -37,6 +39,11 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
               height={500}
               className="rounded-md"
             />
+            <div className="flex mt-2">
+              <div className="text-xs font-bold leading-sm uppercase px-3 py-1 bg-green-200 text-green-700 rounded-full">
+                Ready For adoption
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-span-5 md:col-span-3">
@@ -111,25 +118,27 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
         <h1 className="text-2xl font-semibold">Description</h1>
         <p className="text-md text-gray-500">{adoption?.pet.description}</p>
       </div>
-      <div className="mt-4">
-        {!isOwner &&
-          (adoptionRequest ? (
-            <div className="p-6 bg-white rounded-md">
-              <p>You have applied already</p>
-              <div className="flex items-center">
-                Status:{" "}
-                {adoptionRequest.accepted ? (
-                  <p className="text-green-500 font-semibold p-1">Accepted</p>
-                ) : (
-                  <p className="text-yellow-500 font-semibold p-1">Pending</p>
-                )}
+      {!adoption?.adopted && (
+        <div className="mt-4">
+          {!isOwner &&
+            (adoptionRequest ? (
+              <div className="p-6 bg-white rounded-md">
+                <p>You have applied already</p>
+                <div className="flex items-center">
+                  Status:{" "}
+                  {adoptionRequest.accepted ? (
+                    <p className="text-green-500 font-semibold p-1">Accepted</p>
+                  ) : (
+                    <p className="text-yellow-500 font-semibold p-1">Pending</p>
+                  )}
+                </div>
               </div>
-            </div>
-          ) : (
-            <ApplyForm adoptionId={adoption?.id as string} />
-          ))}
-      </div>
-      {isOwner && (
+            ) : (
+              <ApplyForm adoptionId={adoption?.id as string} />
+            ))}
+        </div>
+      )}
+      {isOwner && !adoption?.adopted && (
         <div className="mt-4">
           <AdoptionRequestListing adoptionRequestListings={adoptionRequests} />
         </div>
