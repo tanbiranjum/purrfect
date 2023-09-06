@@ -4,12 +4,13 @@ import React, { useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import axios from "axios"
 import queryString from "query-string"
+import { SafeAdoptionListing } from "@/app/types"
 
 // type Props = {}
 
 const useMoreAdoptions = () => {
   const [page, setPage] = useState(2)
-  const [moreAdoptions, setMoreAdoptions] = useState([])
+  const [moreAdoptions, setMoreAdoptions] = useState<SafeAdoptionListing[]>([])
   const queryString = useSearchParams().toString()
 
   const fetchMoreAdoptions = async () => {
