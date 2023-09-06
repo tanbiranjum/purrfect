@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import prisma from "@/lib/prismadb"
 import getAdoptionListings from "@/app/actions/get-adoption-listings"
+import { IFilterParams } from "@/app/types"
 
 export async function POST(request: NextRequest) {
   const { values, currentUser } = await request.json()
@@ -53,16 +54,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
-type Query = {
-  category?: string
-  gender?: string
-  ownerId?: string
-  adopted?: boolean
-}
-
 export async function GET(request: NextRequest) {
   const query = Object.fromEntries(request.nextUrl.searchParams.entries())
-  const adoptions = await getAdoptionListings(query as Query)
+  const adoptions = await getAdoptionListings(query as IFilterParams)
   try {
     return NextResponse.json(JSON.stringify(adoptions), {
       status: 200,

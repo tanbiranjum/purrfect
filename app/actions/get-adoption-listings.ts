@@ -1,14 +1,5 @@
 import prisma from "@/lib/prismadb"
-
-export interface SearchParams {
-  adopted?: boolean
-  category?: string
-  lat?: number
-  lon?: number
-  age?: string
-  gender?: string
-  page?: number
-}
+import { IFilterParams } from "../types"
 
 type Query = {
   pet?: {
@@ -38,7 +29,7 @@ type Query = {
   }
 }
 
-export default async function getAdoptionListings(searchParams: SearchParams) {
+export default async function getAdoptionListings(searchParams: IFilterParams) {
   const { adopted, category, lat, lon, age, gender, page } = searchParams
 
   const currentPage = page || 1
