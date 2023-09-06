@@ -1,7 +1,6 @@
 import React from "react"
 
-import AdoptionCard from "@/components/adoption-listing/adoption-card"
-import MoreAdoptions from "@/components/more-adoptions/more-adoptions"
+import AdoptionCardContainer from "@/components/adoption-listing/adoption-card-container"
 import SearchFilter from "@/components/search/search-filter"
 
 import getAdoptionListings from "../actions/get-adoption-listings"
@@ -22,14 +21,7 @@ const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
   return (
     <div className="container">
       <SearchFilter />
-      <div className="grid grid-cols-5 gap-6 pb-8 pt-6 md:py-10">
-        {adoptions?.map((adoption) => (
-          <AdoptionCard key={adoption.id} data={adoption} />
-        ))}
-      </div>
-      <div>
-        <MoreAdoptions />
-      </div>
+      <AdoptionCardContainer adoptions={adoptions} />
     </div>
   )
 }

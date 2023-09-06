@@ -11,15 +11,18 @@ import { SafeAdoptionListing } from "@/app/types"
 const useMoreAdoptions = () => {
   const [page, setPage] = useState(2)
   const [moreAdoptions, setMoreAdoptions] = useState<SafeAdoptionListing[]>([])
+  const [loading, setLoading] = useState(false)
   const queryString = useSearchParams().toString()
 
   const fetchMoreAdoptions = async () => {
+    setLoading(true)
     const existingQuery = queryString.length > 0 ? queryString + "&" : ""
     const { data } = await axios.get(
       `/api/adoption/?${existingQuery}page=${page}`
     )
     setMoreAdoptions((prev) => prev.concat(JSON.parse(data)))
     setPage((prev) => prev + 1)
+    setLoading(false)
   }
 
   const loadMoreAdoptions = () => {
@@ -34,6 +37,7 @@ const useMoreAdoptions = () => {
   return {
     moreAdoptions,
     loadMoreAdoptions: fetchMoreAdoptionsMemorized,
+    loading
   }
 }
 

@@ -53,7 +53,6 @@ const RentModal = () => {
     },
   })
 
-  const category = form.watch("category")
   const imageSrc = form.watch("imageSrc")
   const searchText = form.watch("address")
 
