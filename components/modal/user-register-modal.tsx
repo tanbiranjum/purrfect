@@ -46,8 +46,6 @@ const UserRegisterModal = () => {
       .catch(() => {
         toast.error("Something went wrong!")
       })
-
-    console.log(values)
   }
 
   const toggle = () => {

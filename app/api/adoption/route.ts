@@ -1,53 +1,75 @@
-import prisma from '@/lib/prismadb'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from "next/server"
 
-export async function POST(request: Request) {
-    const { values, currentUser } = await request.json()
+import prisma from "@/lib/prismadb"
+import getAdoptionListings from "@/app/actions/get-adoption-listings"
 
-    try {
-        const newPet = await prisma?.pet.create({
-            data: {
-                name: values.name,
-                category: values.category,
-                age: values.age * 1,
-                gender: values.gender,
-                ownerId: currentUser?.id,
-                imageSrc: values.imageSrc,
-                description: values.description,
-            },
-        })
+export async function POST(request: NextRequest) {
+  const { values, currentUser } = await request.json()
 
-        const newAddress = await prisma?.address.create({
-            data: {
-                address: values.address,
-                lat: values.lat,
-                lon: values.lon,
-            },
-        })
+  try {
+    const newPet = await prisma?.pet.create({
+      data: {
+        name: values.name,
+        category: values.category,
+        age: values.age * 1,
+        gender: values.gender,
+        ownerId: currentUser?.id,
+        imageSrc: values.imageSrc,
+        description: values.description,
+      },
+    })
 
-        const newAdoption = await prisma?.adoptionApplication.create({
-            data: {
-                petId: newPet?.id,
-                applicantId: currentUser?.id,
-                name: values.ownerName,
-                email: values.ownerEmail,
-                phone: values.ownerPhone,
-                addressId: newAddress?.id,
-            },
-            include: {
-                pet: true,
-                applicant: true,
-            }
-        })
-        console.log(newAdoption)
+    const newAddress = await prisma?.address.create({
+      data: {
+        address: values.address,
+        lat: values.lat,
+        lon: values.lon,
+      },
+    })
 
-        return NextResponse.json(JSON.stringify(newAdoption), {
-            status: 200,
-        })
-    } catch (error) {
-        console.log(error)
-        return NextResponse.json(JSON.stringify(error), {
-            status: 500,
-        })
-    }
+    const newAdoption = await prisma?.adoptionApplication.create({
+      data: {
+        petId: newPet?.id,
+        applicantId: currentUser?.id,
+        name: values.ownerName,
+        email: values.ownerEmail,
+        phone: values.ownerPhone,
+        addressId: newAddress?.id,
+      },
+      include: {
+        pet: true,
+        applicant: true,
+      },
+    })
+    console.log(newAdoption)
+
+    return NextResponse.json(JSON.stringify(newAdoption), {
+      status: 200,
+    })
+  } catch (error) {
+    return NextResponse.json(JSON.stringify(error), {
+      status: 500,
+    })
+  }
+}
+
+type Query = {
+  category?: string
+  gender?: string
+  ownerId?: string
+  adopted?: boolean
+}
+
+export async function GET(request: NextRequest) {
+  const query = Object.fromEntries(request.nextUrl.searchParams.entries())
+  const adoptions = await getAdoptionListings(query as Query)
+  try {
+    return NextResponse.json(JSON.stringify(adoptions), {
+      status: 200,
+    })
+  } catch (error) {
+    return NextResponse.json(JSON.stringify(error), {
+      status: 500,
+    })
+  }
 }

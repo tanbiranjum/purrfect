@@ -13,7 +13,12 @@ interface CategoryBoxProps {
   selected: boolean
 }
 
-const CategoryBox: React.FC<CategoryBoxProps> = ({ label, name, icon, selected }) => {
+const CategoryBox: React.FC<CategoryBoxProps> = ({
+  label,
+  name,
+  icon,
+  selected,
+}) => {
   const router = useRouter()
   const params = useSearchParams()
 
@@ -47,7 +52,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({ label, name, icon, selected }
   return (
     <div
       onClick={handleClick}
-      className="flex w-32 cursor-pointer flex-col items-center justify-center border p-4"
+      className="flex w-32 cursor-pointer flex-col items-center justify-center border p-4 rounded-md shadow-md bg-white"
     >
       {icon}
       <p className="hidden">{name}</p>

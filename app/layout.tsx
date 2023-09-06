@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import Footer from "@/components/footer/footer"
 import { SiteHeader } from "@/components/header/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
@@ -58,6 +59,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           </ThemeProvider>
           <Toaster />
         </body>
+        <Footer />
       </html>
     </>
   )

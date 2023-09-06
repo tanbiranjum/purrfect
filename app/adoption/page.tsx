@@ -1,9 +1,10 @@
 import React from "react"
 
 import AdoptionCard from "@/components/adoption-listing/adoption-card"
+import MoreAdoptions from "@/components/more-adoptions/more-adoptions"
 import SearchFilter from "@/components/search/search-filter"
 
-import getSearchedAdoptions from "../actions/search-adoption"
+import getAdoptionListings from "../actions/get-adoption-listings"
 
 interface AdoptionPageProps {
   searchParams: {
@@ -16,8 +17,7 @@ interface AdoptionPageProps {
 }
 
 const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
-  const adoptions = await getSearchedAdoptions(searchParams)
-  console.log(adoptions)
+  const adoptions = await getAdoptionListings(searchParams)
 
   return (
     <div className="container">
@@ -26,6 +26,9 @@ const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
         {adoptions?.map((adoption) => (
           <AdoptionCard key={adoption.id} data={adoption} />
         ))}
+      </div>
+      <div>
+        <MoreAdoptions />
       </div>
     </div>
   )

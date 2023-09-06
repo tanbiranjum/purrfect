@@ -111,7 +111,6 @@ const RentModal = () => {
 
   const onSubmit = async (values: z.infer<typeof adoptionSchema>) => {
     try {
-      console.log("Hellloooo")
       const adoption = await axios.post("/api/adoption", {
         values,
         currentUser,
@@ -240,7 +239,6 @@ const RentModal = () => {
             if (step < STEPS.DESCRIPTION) {
               onNext()
             } else {
-              console.log(form.getValues())
               form.handleSubmit(onSubmit)()
             }
           }}

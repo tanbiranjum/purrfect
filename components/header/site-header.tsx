@@ -27,7 +27,6 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "../ui/menubar"
-import Categories from "./categories"
 
 interface SiteHeaderProps {
   currentUser?: User | null
@@ -131,7 +130,6 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
           </div>
         </div>
       </div>
-      <Categories />
     </header>
   )
 }

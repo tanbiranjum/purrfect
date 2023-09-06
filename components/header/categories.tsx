@@ -84,11 +84,36 @@ const Categories = () => {
     slidesToScroll: 1,
     prevArrow: <PreviousArrow />,
     nextArrow: <NextArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   }
 
   return (
     <div>
-      <div className="container py-6">
+      <div className="py-6">
         <Slider {...settings}>
           {categories.map((item, i) => (
             <CategoryBox

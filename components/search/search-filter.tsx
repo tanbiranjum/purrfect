@@ -69,7 +69,6 @@ const SearchFilter = (props: Props) => {
 
     const queryString = new URLSearchParams(searchQuery).toString()
     router.push(`/adoption?${queryString}`)
-    console.log(queryString)
   }
 
   const handleReset = () => {
