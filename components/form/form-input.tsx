@@ -24,7 +24,7 @@ const FormInput: React.FC<FormInputProps> = ({
   label,
   type = "text",
   placeholder,
-  className
+  className,
 }) => {
   return (
     <FormField
@@ -34,7 +34,12 @@ const FormInput: React.FC<FormInputProps> = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type={type} placeholder={placeholder} {...field} className={className}/>
+            <Input
+              type={type}
+              placeholder={placeholder}
+              {...field}
+              className={className}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>

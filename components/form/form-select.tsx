@@ -40,7 +40,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
+                <SelectValue placeholder={placeholder}/>
               </SelectTrigger>
             </FormControl>
             <SelectContent>{options}</SelectContent>

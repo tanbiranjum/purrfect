@@ -1,12 +1,8 @@
 "use client"
 import { useEffect, useState } from "react"
 
-type Props = {
-  searchText: string
-}
-
-export const useLocation = ({ searchText }: Props) => {
-  const [address, setAddress] = useState(searchText)
+export const useLocation = () => {
+  const [address, setAddress] = useState<string>("")
   const [isValid, setIsValid] = useState(false)
   const [location, setLocation] = useState({
     lat: -1,

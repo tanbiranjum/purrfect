@@ -19,6 +19,7 @@ type Props = {
   >
   address: string
   setAddress: React.Dispatch<SetStateAction<string>>
+  className?: string
 }
 
 const BASE_URL = "https://nominatim.openstreetmap.org/search?"
@@ -29,6 +30,7 @@ const AddressNew = ({
   setLocation,
   address,
   setAddress,
+  className
 }: Props) => {
   const [addresses, setAddresses] = useState([])
   const [suggestionDisplay, setSuggestionDisplay] = useState(false)
@@ -75,7 +77,8 @@ const AddressNew = ({
     <div>
       <div className="relative">
         <Input
-          className="w-56 h-14"
+        // TODO: remove the constant className style 
+          className={`w-56 h-14 ${className}`}
           placeholder="Enter location"
           autoComplete="off"
           value={address}

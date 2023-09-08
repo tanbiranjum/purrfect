@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import "@uploadthing/react/styles.css";
 import { Metadata } from "next"
 import { Toaster } from "react-hot-toast"
 

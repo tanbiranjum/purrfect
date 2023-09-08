@@ -21,9 +21,7 @@ const ApplyAdoptionSchema = z.object({
 })
 
 const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
-  const formLocation = useLocation({
-    searchText: "",
-  })
+  const formLocation = useLocation()
   const [applied, setApplied] = useState(false)
   const form = useForm<z.infer<typeof ApplyAdoptionSchema>>({
     resolver: zodResolver(ApplyAdoptionSchema),

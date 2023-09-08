@@ -23,12 +23,12 @@ interface FormSelectProps {
   className?: string
 }
 
-const PetCategorySelect: React.FC<FormSelectProps> = ({
+const PetGenderSelect: React.FC<FormSelectProps> = ({
   form,
   name,
   label,
   placeholder,
-  className
+  className,
 }) => {
   return (
     <FormField
@@ -44,11 +44,9 @@ const PetCategorySelect: React.FC<FormSelectProps> = ({
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              <SelectItem value="cat">Cat</SelectItem>
-              <SelectItem value="dog">Dog</SelectItem>
-              <SelectItem value="bird">Bird</SelectItem>
-              <SelectItem value="rabbit">Rabbit</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="female">Female</SelectItem>
+              <SelectItem value="unknown">Unknown</SelectItem>
             </SelectContent>
           </Select>
           <FormMessage />
@@ -58,4 +56,4 @@ const PetCategorySelect: React.FC<FormSelectProps> = ({
   )
 }
 
-export default PetCategorySelect
+export default PetGenderSelect
