@@ -34,15 +34,15 @@ const RentModal = () => {
   const useAdoption = useAdoptionModal()
   const [step, setStep] = useState(STEPS.INFO)
   const currentUser = useContext(AuthContext)
+  const [files, setFiles] = useState<File[]>([])
 
   const form = useForm<z.infer<typeof adoptionSchema>>({
     resolver: zodResolver(adoptionSchema),
     defaultValues: {
       name: "",
       category: "",
-      age: "",
+      age: 0,
       gender: "",
-      imageSrc: "",
       ownerName: "",
       ownerPhone: "",
       ownerEmail: "",
@@ -53,7 +53,6 @@ const RentModal = () => {
     },
   })
 
-  const imageSrc = form.watch("imageSrc")
   const searchText = form.watch("address")
 
   const setCustomValue = (id: any, value: any) => {
@@ -156,20 +155,9 @@ const RentModal = () => {
         return (
           <div>
             Upload Image of your pet
-            <FormField
-              control={form.control}
-              name="imageSrc"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <ImageUpload
-                      onChange={(value) => setCustomValue("imageSrc", value)}
-                      value={imageSrc}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+            <ImageUpload
+              files={files}
+              setFiles={setFiles}
             />
           </div>
         )

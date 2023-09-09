@@ -59,7 +59,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                   <MenubarTrigger className="gap-2">
                     <Icons.menu />
                     <Avatar className="h-6 w-6">
-                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarImage src={currentUser?.image as string}/>
                       <AvatarFallback>User</AvatarFallback>
                     </Avatar>
                   </MenubarTrigger>

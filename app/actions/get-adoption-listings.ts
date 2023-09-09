@@ -33,7 +33,7 @@ export default async function getAdoptionListings(searchParams: IFilterParams) {
   const { adopted, category, lat, lon, age, gender, page } = searchParams
 
   const currentPage = page || 1
-  const limit = 1
+  const limit = 4
 
   let ageRange: number[] = []
 

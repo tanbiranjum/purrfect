@@ -1,19 +1,22 @@
 "use client"
 
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
+import { Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { z } from "zod"
 
 import { adoptionSchema } from "@/lib/validations/adoption"
 import { useLocation } from "@/hooks/use-location"
+import useUploadImage from "@/hooks/use-upload-image"
 import { AuthContext } from "@/app/providers/auth-provider"
 
 import AddressNew from "../address/address-new"
 import { Button } from "../ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
+import { Form } from "../ui/form"
 import { Separator } from "../ui/separator"
 import ImageUpload from "./Image-upload"
 import FormInput from "./form-input"
@@ -25,14 +28,18 @@ type Props = {}
 const AdoptionPost = (props: Props) => {
   const formLocation = useLocation()
   const currentUser = useContext(AuthContext)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [files, setFiles] = useState<File[]>([])
+  const { startUpload } = useUploadImage()
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof adoptionSchema>>({
     resolver: zodResolver(adoptionSchema),
     defaultValues: {
       name: "",
       category: "",
-      age: "",
+      age: 0,
       gender: "",
-      imageSrc: "",
       ownerName: "",
       ownerPhone: "",
       ownerEmail: "",
@@ -42,8 +49,6 @@ const AdoptionPost = (props: Props) => {
       description: "",
     },
   })
-  const imageSrc = form.watch("imageSrc")
-  const searchText = form.watch("address")
 
   const setCustomValue = (id: any, value: any) => {
     form.setValue(id, value, {
@@ -54,31 +59,42 @@ const AdoptionPost = (props: Props) => {
   }
 
   const onSubmit = async (values: z.infer<typeof adoptionSchema>) => {
-    values = {
-      ...values,
-      address: formLocation.address,
-      lat: formLocation.location.lat,
-      lon: formLocation.location.lon,
-    }
+    setIsSubmitting(true)
     try {
+      const res = await startUpload(files)
+      const fileUrl = res?.map((file: any) => file.fileUrl)[0]
+      const formValues = {
+        ...values,
+        address: formLocation.address,
+        lat: formLocation.location.lat,
+        lon: formLocation.location.lon,
+        imageSrc: fileUrl,
+      }
       const adoption = await axios.post("/api/adoption", {
-        values,
+        values: formValues,
         currentUser,
       })
       if (adoption) {
+        const responseData = JSON.parse(adoption.data)
         toast.success(`Your pet is ready for adoption`)
-        form.reset()
+        router.push(`/adoption/${responseData.id}`)
+        setIsSubmitting(true)
       }
     } catch (error: any) {
       toast.error(`Something went wrong! ${error.message}`)
+      setIsSubmitting(true)
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     form.setValue("address", formLocation.address)
     form.setValue("lat", formLocation.location.lat)
     form.setValue("lon", formLocation.location.lon)
-  }, [formLocation.address, formLocation.location.lat, formLocation.location.lon])
+  }, [
+    formLocation.address,
+    formLocation.location.lat,
+    formLocation.location.lon,
+  ])
 
   return (
     <Form {...form}>
@@ -92,24 +108,13 @@ const AdoptionPost = (props: Props) => {
         <div className="grid grid-cols-6 py-8">
           <div className="col-span-2">
             <div className="flex">
-              <FormField
-                control={form.control}
-                name="imageSrc"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <ImageUpload
-                        onChange={(value) => setCustomValue("imageSrc", value)}
-                        value={imageSrc}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <ImageUpload
+                files={files}
+                setFiles={setFiles}
               />
             </div>
           </div>
-          <div className="col-span-4">
+          <div className="col-span-4 flex flex-col gap-4">
             <FormInput
               form={form}
               name="name"
@@ -125,7 +130,13 @@ const AdoptionPost = (props: Props) => {
               className="w-full"
             />
             <div className="flex gap-2">
-              <FormInput form={form} name="age" label="Age" placeholder="age" />
+              <FormInput
+                form={form}
+                {...form.register("age", { valueAsNumber: true })}
+                type="number"
+                label="Age"
+                placeholder="age"
+              />
               <PetGenderSelect
                 form={form}
                 name="gender"
@@ -134,14 +145,16 @@ const AdoptionPost = (props: Props) => {
                 className="w-full"
               />
             </div>
-            <Separator className="my-6" />
-            <FormInput
-              form={form}
-              name="ownerName"
-              label="Your name"
-              placeholder="name"
-              className="w-full"
-            />
+            <Separator className="my-5" />
+            <div className="-mt-2">
+              <FormInput
+                form={form}
+                name="ownerName"
+                label="Your name"
+                placeholder="name"
+                className="w-full"
+              />
+            </div>
             <div className="grid grid-cols-2 gap-2">
               <FormInput
                 form={form}
@@ -172,7 +185,10 @@ const AdoptionPost = (props: Props) => {
               className="w-full"
             />
             <div className="mt-4">
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
                 Register
               </Button>
             </div>

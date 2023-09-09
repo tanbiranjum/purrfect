@@ -11,6 +11,10 @@ export const siteConfig = {
     {
       title: 'Adoption',
       href: "/adoption"
+    },
+    {
+      title: 'Post an adoption',
+      href: "/post-adoption"
     }
   ],
   links: {

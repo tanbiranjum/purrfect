@@ -1,22 +1,17 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 import Image from "next/image"
 import { CatIcon } from "lucide-react"
 import { useDropzone, type FileWithPath } from "react-dropzone"
 import { generateClientDropzoneAccept } from "uploadthing/client"
 
-import { useUploadThing } from "@/lib/uploadthings"
-
-import { Button } from "../ui/button"
-
 interface ImageUploadProps {
-  onChange: (value: string) => void
-  value: string
+  files: File[]
+  setFiles: React.Dispatch<React.SetStateAction<File[]>>
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
-  const [files, setFiles] = useState<File[]>([])
+const ImageUpload: React.FC<ImageUploadProps> = ({ files, setFiles}) => {
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     setFiles(acceptedFiles)
   }, [])
@@ -26,26 +21,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
     accept: ["image"] ? generateClientDropzoneAccept(["image"]) : undefined,
   })
 
-  const { startUpload } = useUploadThing("imageUploader", {
-    onClientUploadComplete: (
-      res:
-        | {
-            fileUrl: string
-            fileKey: string
-          }[]
-        | undefined
-    ) => {
-      const fileUrl = res?.map((file: any) => file.fileUrl)[0]
-      onChange(fileUrl)
-      alert("uploaded successfully!")
-    },
-    onUploadError: () => {
-      alert("error occurred while uploading")
-    },
-  })
 
   return (
-    <>
       <div className="h-48 w-48 border flex justify-center items-center border-rose-600 p-4 rounded-md">
         {files.length === 0 && (
           <div {...getRootProps()} className="cursor-pointer">
@@ -67,20 +44,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
           />
         )}
       </div>
-      <div className="">
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-            startUpload(files)
-          }}
-          type="button"
-          className="px-4 py-1 rounded-md bg-pink-600 text-white w-full mt-2"
-          disabled={files.length === 0}
-        >
-          Upload a photo
-        </Button>
-      </div>
-    </>
   )
 }
 
