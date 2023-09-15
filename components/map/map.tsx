@@ -1,6 +1,7 @@
+"use client"
 import React from "react"
 import L, { LatLngTuple } from "leaflet"
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet"
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 
 import "leaflet/dist/leaflet.css"
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png"
@@ -19,15 +20,18 @@ L.Icon.Default.mergeOptions({
 
 type Props = {
   location: number[]
+  className?: string
+  children?: React.ReactNode
+  zoom?: number
 }
 
-const Map = ({ location }: Props) => {
+const Map = ({ location, className, zoom, children }: Props) => {
   return (
     <MapContainer
       center={(location as LatLngTuple) || [51.505, -0.09]}
-      zoom={13}
+      zoom={zoom || 13}
       scrollWheelZoom={false}
-      className="h-[35vh] rounded-lg"
+      className={`h-[35vh] rounded-lg ${className}`}
     >
       <ChangeView center={location as LatLngTuple} zoom={13} />
       <TileLayer
@@ -36,9 +40,10 @@ const Map = ({ location }: Props) => {
       />
       <Marker position={location as LatLngTuple}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          Purrfect Adoption
         </Popup>
       </Marker>
+      {children}
     </MapContainer>
   )
 }

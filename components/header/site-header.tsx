@@ -72,7 +72,6 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                         <MenubarItem onClick={() => {}}>
                           Adoption History
                         </MenubarItem>
-                        <MenubarItem onClick={() => {}}>Profile</MenubarItem>
                         <MenubarItem onClick={() => signOut()}>
                           Logout
                         </MenubarItem>

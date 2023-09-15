@@ -18,12 +18,12 @@ const AdoptionCardContainer = ({ adoptions }: Props) => {
   const { moreAdoptions, loadMoreAdoptions, loading } = useMoreAdoptions()
 
   return (
-    <section className="container pb-8 pt-6 md:py-10">
+    <section className="container pb-8">
       {adoptions?.length === 0 && (
         <div className="text-lg">Sorry No Adoption Found!</div>
       )}
       <Suspense fallback={<Skeleton />}>
-        <div className="grid grid-cols-5 gap-6">
+        <div className="grid grid-cols-5 md:grid-cols-4 gap-6">
           {adoptions?.map((adoption) => (
             <AdoptionCard key={adoption.id} data={adoption} />
           ))}

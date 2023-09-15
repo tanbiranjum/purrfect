@@ -1,11 +1,14 @@
 import { type ClassValue, clsx } from "clsx"
+import { LatLngExpression } from "leaflet";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function distanceInKm(lat1 : number, lon1 : number, lat2 : number, lon2 : number) {
+export function distanceInKm(positions: any) {
+  const [lat1, lon1] = positions[0]
+  const [lat2, lon2] = positions[1]
   // Radius of the Earth in kilometers
   const R = 6371;
 

@@ -6,22 +6,23 @@ import Slider, { Settings } from "react-slick"
 
 import { Icons } from "../icons"
 import CategoryBox from "./category-box"
+import { Cat, Dog, Egg } from "lucide-react"
 
 export const categories = [
   {
-    icon: <Icons.cat />,
+    icon: <Cat/>,
     label: "Find cat",
     name: "cat",
     description: "Cute kitty cat",
   },
   {
-    icon: <Icons.dog />,
+    icon: <Dog/>,
     label: "Find dog",
     name: "dog",
     description: "Your best friend and companion",
   },
   {
-    icon: <Icons.rabbit />,
+    icon: <Icons.rabbit/>,
     label: "Find rabbit",
     name: "rabbit",
     description: "Forest starts here",
@@ -33,7 +34,7 @@ export const categories = [
     description: "Forest starts here",
   },
   {
-    icon: <Icons.egg />,
+    icon: <Egg/>,
     label: "others",
     name: "others",
     description: "Tent starts here",

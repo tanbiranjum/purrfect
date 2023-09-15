@@ -56,7 +56,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
     >
       {icon}
       <p className="hidden">{name}</p>
-      <p>{label}</p>
+      <p className="text-pink-500">{label}</p>
       {selected ? (
         <Separator className="mx-auto mt-2 h-[2px] w-3/5 bg-slate-900" />
       ) : (

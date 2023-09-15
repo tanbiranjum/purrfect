@@ -19,9 +19,13 @@ const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
   const adoptions = await getAdoptionListings(searchParams)
 
   return (
-    <div className="container">
-      <SearchFilter />
-      <AdoptionCardContainer adoptions={adoptions} />
+    <div className="container grid grid-cols-6 mt-10">
+      <div className="col-span-1">
+        <SearchFilter />
+      </div>
+      <div className="col-span-5">
+        <AdoptionCardContainer adoptions={adoptions} />
+      </div>
     </div>
   )
 }

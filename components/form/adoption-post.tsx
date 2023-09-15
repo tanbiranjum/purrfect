@@ -16,8 +16,17 @@ import { AuthContext } from "@/app/providers/auth-provider"
 
 import AddressNew from "../address/address-new"
 import { Button } from "../ui/button"
-import { Form } from "../ui/form"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form"
 import { Separator } from "../ui/separator"
+import { Textarea } from "../ui/textarea"
 import ImageUpload from "./Image-upload"
 import FormInput from "./form-input"
 import PetCategorySelect from "./pet-category-select"
@@ -108,10 +117,7 @@ const AdoptionPost = (props: Props) => {
         <div className="grid grid-cols-6 py-8">
           <div className="col-span-2">
             <div className="flex">
-              <ImageUpload
-                files={files}
-                setFiles={setFiles}
-              />
+              <ImageUpload files={files} setFiles={setFiles} />
             </div>
           </div>
           <div className="col-span-4 flex flex-col gap-4">
@@ -177,12 +183,25 @@ const AdoptionPost = (props: Props) => {
               <p className="text-sm font-semibold py-2">Enter your address</p>
               <AddressNew {...formLocation} className="w-full h-auto py-3" />
             </div>
-            <FormInput
-              form={form}
+            <FormField
+              control={form.control}
               name="description"
-              label="Description"
-              placeholder="food habit, instinct"
-              className="w-full"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Tell us a little bit about your pet"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    You can <span>mention</span> about habit, medical condition, others.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
             <div className="mt-4">
               <Button type="submit" className="w-full" disabled={isSubmitting}>

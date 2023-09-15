@@ -28,9 +28,7 @@ const SearchFilter = (props: Props) => {
     lat: -1,
     lon: -1,
   })
-  const location = useLocation({
-    searchText: "",
-  })
+  const location = useLocation()
 
   useEffect(() => {
     if (location.location.lat > -1 && location.location.lon > -1) {
@@ -82,13 +80,14 @@ const SearchFilter = (props: Props) => {
   }
 
   return (
-    <div className="flex bg-white p-6 rounded-md justify-around">
+    <div className="flex flex-col gap-y-4 bg-white p-6 rounded-md justify-around">
+      <h3 className="font-semibold text-lg">Filter</h3>
       <Select
         onValueChange={(value) => {
           setQuery({ ...query, category: value })
         }}
       >
-        <SelectTrigger className="w-32 h-14">
+        <SelectTrigger className="w-full h-10">
           <SelectValue placeholder="Select species" />
         </SelectTrigger>
         <SelectContent>
@@ -107,7 +106,7 @@ const SearchFilter = (props: Props) => {
           setQuery({ ...query, gender: value })
         }}
       >
-        <SelectTrigger className="w-32 h-14">
+        <SelectTrigger className="w-full h-10">
           <SelectValue placeholder="Select gender" />
         </SelectTrigger>
         <SelectContent>
@@ -124,7 +123,7 @@ const SearchFilter = (props: Props) => {
           setQuery({ ...query, age: value })
         }}
       >
-        <SelectTrigger className="w-32 h-14">
+        <SelectTrigger className="w-full h-10">
           <SelectValue placeholder="Select age" />
         </SelectTrigger>
         <SelectContent>
@@ -136,7 +135,7 @@ const SearchFilter = (props: Props) => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <AddressNew {...location} />
+      <AddressNew {...location} className="h-10 w-full"/>
       <div className="flex gap-3">
         <Button className="h-full" onClick={handleReset}>Reset</Button>
         <Button className="h-full w-40" onClick={handleSearch}>
