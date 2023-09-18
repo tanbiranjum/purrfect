@@ -79,7 +79,7 @@ const AddressNew = ({
         <Input
         // TODO: remove the constant className style 
           className={`w-56 h-14 ${className}`}
-          placeholder="Enter location"
+          placeholder="Search location"
           autoComplete="off"
           value={address}
           onChange={(e) => {

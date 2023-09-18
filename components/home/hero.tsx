@@ -1,35 +1,25 @@
 import React from "react"
 import Image from "next/image"
 
+import { Badge } from "../ui/badge"
 import { Button } from "../ui/button"
 
 const Hero = () => {
   return (
-    <section className="dark:bg-gray-800 dark:text-gray-100">
-      <div className="container flex flex-col justify-center p-6 mx-auto sm:py-6 lg:py-10 lg:flex-row lg:justify-between">
-        <div className="flex flex-col justify-center p-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left">
-          <h1 className="text-5xl font-bold leading-relaxed sm:text-6xl">
-            Purrfect {" "}
-            <span className="dark:text-violet-400">Adoption</span> Today
-          </h1>
-          <p className="mt-6 mb-8 text-lg sm:mb-12">
-          A little love is all they need. Adopt your best friend. {" "}
-            <br className="hidden md:inline lg:hidden" />
-            They need your loving care. 
-          </p>
-          <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <Button>Get Started</Button>
-            <Button variant="outline">Contact Now</Button>
-          </div>
-        </div>
-        <div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128">
-          <Image
-            src="images/welcome_cat.svg"
-            alt="welcome cats"
-            height={600}
-            width={600}
-            // className="object-contain h-72 sm:h-80 lg:h-96 xl:h-112 2xl:h-128"
-          />
+    <section className="dark:bg-gray-800 dark:text-gray-100 h-[90vh]">
+      <div className="container flex flex-col justify-center items-center h-full text-center p-6 mx-auto sm:py-6 lg:py-10">
+        <Badge variant="secondary" className="bg-slate-200 px-3 py-2 text-sm">Follow us on Twitter</Badge>
+        <h1 className="text-6xl font-bold sm:text-7xl max-w-5xl mx-auto">
+          Find your pet the safe house you always wanted.
+        </h1>
+        <p className="mt-6 mb-8 text-xl sm:mb-12 text-slate-600">
+          A little love is all they need. Adopt your best friend.{" "}
+          <br className="hidden md:inline lg:hidden" />
+          They need your loving care.
+        </p>
+        <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-center">
+          <Button>Get Started</Button>
+          <Button variant="outline" className="bg-white">Contact Now</Button>
         </div>
       </div>
     </section>
