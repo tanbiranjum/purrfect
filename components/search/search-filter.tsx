@@ -80,7 +80,8 @@ const SearchFilter = (props: Props) => {
   }
 
   return (
-    <div className="flex flex-col gap-y-4 bg-white p-6 rounded-md justify-around">
+    <div className="h-[90vh] bg-white rounded-md">
+    <div className="flex flex-col gap-y-4 p-6 justify-around">
       <h3 className="font-semibold text-lg">Filter</h3>
       <Select
         onValueChange={(value) => {
@@ -138,10 +139,11 @@ const SearchFilter = (props: Props) => {
       <AddressNew {...location} className="h-10 w-full"/>
       <div className="flex gap-3">
         <Button className="h-full" onClick={handleReset}>Reset</Button>
-        <Button className="h-full w-40" onClick={handleSearch}>
+        <Button className="h-full w-full" onClick={handleSearch}>
           Search
         </Button>
       </div>
+    </div>
     </div>
   )
 }

@@ -6,7 +6,7 @@ type Props = {}
 
 const PostAdoptionPage = (props: Props) => {
   return (
-    <div className="bg-white">
+    <div className="bg-white py-8">
       <div className="max-w-3xl mx-auto">
         <AdoptionPost />
       </div>

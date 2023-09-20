@@ -27,17 +27,17 @@ export type AdoptionRequest = {
   adoptionApplicationId: string | null
 }
 
-const handleConfirmAdoption = async (
-  requestId: string,
-  adoptionApplicationId: string,
-  userId: string
-) => {
-  await axios.post("/api/adoption/request/confirm", {
-    adoptionRequestId: requestId,
-    adoptionApplicationId,
-    userId,
-  })
-}
+// const handleConfirmAdoption = async (
+//   requestId: string,
+//   adoptionApplicationId: string,
+//   userId: string
+// ) => {
+//   await axios.post("/api/adoption/request/confirm", {
+//     adoptionRequestId: requestId,
+//     adoptionApplicationId,
+//     userId,
+//   })
+// }
 
 export const columns: ColumnDef<AdoptionRequest>[] = [
   {

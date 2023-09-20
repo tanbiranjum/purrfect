@@ -1,9 +1,11 @@
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import AdoptionCardContainer from "@/components/adoption-listing/adoption-card-container"
 import Categories from "@/components/header/categories"
 import Hero from "@/components/home/hero"
 
 import getAdoptionListings from "./actions/get-adoption-listings"
 import { IFilterParams } from "./types"
+import Image from "next/image"
 
 interface IndexPageProps {
   searchParams: IFilterParams
@@ -12,33 +14,33 @@ interface IndexPageProps {
 export default async function IndexPage({ searchParams }: IndexPageProps) {
   const adoptions = await getAdoptionListings(searchParams)
   return (
-    <>
+    <div className="pb-8">
       <section>
         <Hero />
       </section>
       <section className="max-w-3xl mx-auto">
         <Categories />
       </section>
-      <AdoptionCardContainer adoptions={adoptions} />
+      <AdoptionCardContainer adoptions={adoptions}/>
       {/* CTA ACTION */}
-      <section>
-        <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 sm:py-8 lg:px-8 bg-white rounded-md">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-bold sm:text-4xl">
-              Transform Lives Through Love.
-            </h2>
-          </div>
-
-          <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-            <div className="relative h-64 overflow-hidden sm:h-80 lg:h-full">
-              <img
-                alt="Party"
-                src="https://images.unsplash.com/photo-1496843916299-590492c751f4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+      <section className="container">
+        <div className="px-4 py-16 sm:px-6 sm:py-8 lg:px-8 bg-white rounded-md">
+          <div className="mt-8 grid grid-cols-5 gap-12">
+            <div className="relative h-64 overflow-hidden sm:h-80 lg:h-full col-span-2">
+              <AspectRatio ratio={4 / 3}>
+                <Image
+                  fill
+                  alt="Party"
+                  src="https://images.unsplash.com/photo-1620379876467-b77f993b3674?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                  className="absolute inset-0 h-full w-full object-cover rounded-md"
+                />
+              </AspectRatio>
             </div>
 
-            <div className="lg:py-16">
+            <div className="col-span-3">
+              <h2 className="text-3xl font-bold sm:text-4xl pb-3">
+                Transform Lives Through Love.
+              </h2>
               <article className="space-y-4 text-gray-600">
                 <p>
                   Choosing to adopt a pet is an act of compassion that not only
@@ -67,6 +69,6 @@ export default async function IndexPage({ searchParams }: IndexPageProps) {
         </div>
       </section>
       {/* CTA ACTION END */}
-    </>
+    </div>
   )
 }

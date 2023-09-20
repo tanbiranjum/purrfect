@@ -19,14 +19,16 @@ const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
   const adoptions = await getAdoptionListings(searchParams)
 
   return (
-    <div className="container grid grid-cols-6 mt-10">
-      <div className="col-span-1">
-        <SearchFilter />
+    <section className="h-[90vh] mt-10">
+      <div className="container grid grid-cols-8 h-full">
+        <div className="col-span-2">
+          <SearchFilter />
+        </div>
+        <div className="col-span-6 h-full overflow-y-scroll">
+          <AdoptionCardContainer adoptions={adoptions} col={3} />
+        </div>
       </div>
-      <div className="col-span-5">
-        <AdoptionCardContainer adoptions={adoptions} />
-      </div>
-    </div>
+    </section>
   )
 }
 

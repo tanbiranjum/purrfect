@@ -1,6 +1,9 @@
 import { type ClassValue, clsx } from "clsx"
 import { LatLngExpression } from "leaflet";
 import { twMerge } from "tailwind-merge"
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -26,4 +29,8 @@ export function distanceInKm(positions: any) {
 
   // Return the distance in kilometers
   return d * R;
+}
+
+export function timeFromNow(date: string): string {
+  return dayjs(date).fromNow()
 }

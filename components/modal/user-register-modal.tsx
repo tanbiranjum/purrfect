@@ -22,6 +22,7 @@ import {
 import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
+import { Separator } from "../ui/separator"
 import Modal from "./modal"
 
 const UserRegisterModal = () => {
@@ -99,8 +100,11 @@ const UserRegisterModal = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Next</Button>
+          <Button type="submit" className="w-full">
+            Register
+          </Button>
         </form>
+        <Separator />
         <div className="flex flex-col gap-3">
           <Button
             onClick={() => signIn("google")}

@@ -113,7 +113,7 @@ const Categories = () => {
   }
 
   return (
-    <div>
+    <div className="mb-6">
       <div className="py-6">
         <Slider {...settings}>
           {categories.map((item, i) => (

@@ -30,9 +30,9 @@ const ApplyAdoptionSchema = z.object({
   message: z.string().min(1).max(255),
 })
 
-const ApplyForm = ({ adoptionId }: { adoptionId: string }) => {
+const ApplyForm = ({ adoptionId, isApplied }: { adoptionId: string, isApplied: boolean }) => {
   const formLocation = useLocation()
-  const [applied, setApplied] = useState(false)
+  const [applied, setApplied] = useState(isApplied)
   const form = useForm<z.infer<typeof ApplyAdoptionSchema>>({
     resolver: zodResolver(ApplyAdoptionSchema),
   })

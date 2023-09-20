@@ -23,6 +23,7 @@ import { Icons } from "../icons"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import Modal from "./modal"
+import { Separator } from "../ui/separator"
 
 const UserLoginModal = () => {
   const router = useRouter()
@@ -91,8 +92,9 @@ const UserLoginModal = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Next</Button>
+          <Button type="submit" className="w-full">Sign in</Button>
         </form>
+        <Separator/>
         <div className="flex flex-col gap-3">
           <Button
             onClick={() => signIn("google")}

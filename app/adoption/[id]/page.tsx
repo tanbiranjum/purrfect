@@ -2,12 +2,18 @@ import React from "react"
 import Image from "next/image"
 import { AdoptionRequest } from "@prisma/client"
 
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import AdoptionRequestListing from "@/components/adoption-listing/adoption-request-listing"
-import ClientOnly from "@/components/client-only"
 import CurrentLocation from "@/components/current-location"
 import ApplyForm from "@/components/form/apply-form"
-import Map from "@/components/map/map"
 import getAdoptionListing from "@/app/actions/get-adoption-listing"
 import getAdoptionRequest, {
   getAdoptionRequestByUser,
@@ -25,15 +31,17 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
 
   let adoptionRequests: AdoptionRequest[] | void = []
   let adoptionRequest: AdoptionRequest | void
+  let isApplied = false
 
   if (isOwner) {
     adoptionRequests = await getAdoptionRequest(id)
   } else {
     adoptionRequest = await getAdoptionRequestByUser(user?.id as string, id)
+    if (adoptionRequest) isApplied = true
   }
   return (
     <div className="bg-white py-4">
-      <div className="container">
+      <div className="max-w-screen-xl mx-auto">
         <h2 className="text-4xl font-semibold py-6">{adoption?.pet.name}</h2>
         <div className="grid grid-cols-5 gap-10 pb-8">
           <div className="col-span-5 md:col-span-2">
@@ -45,131 +53,141 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 height={500}
                 className="rounded-md"
               />
-              <div className="flex justify-between">
-                <div
-                  className={`flex flex-col items-center justify-center ${
-                    adoption?.adopted
-                      ? "bg-green-500 text-white"
-                      : "bg-yellow-500 text-white"
-                  } py-2 px-8 rounded-md shadow-sm border`}
-                >
-                  <p>Status</p>
-                  <p className="font-semibold">
-                    {adoption?.adopted
-                      ? "Adopted".toUpperCase()
-                      : "Not yet".toUpperCase()}
+            </div>
+          </div>
+          <div className="col-span-5 md:col-span-3 flex flex-col justify-between">
+            {/* LOCATION START */}
+            <div className="w-full h-full flex flex-col gap-4">
+              <div className="rounded-md border bg-white p-6 h-full">
+                <h1 className="text-2xl font-semibold">Location</h1>
+                <div className="flex flex-col">
+                  <p className="text-md text-gray-500 py-3">
+                    {adoption?.address.address}
                   </p>
-                </div>
-                <div className="flex flex-col items-center justify-center bg-white py-2 border px-8 rounded-md shadow-sm">
-                  <p>Species</p>
-                  <p className="font-semibold">
-                    {adoption?.pet.category.toUpperCase()}
-                  </p>
-                </div>
-                <div className="flex flex-col items-center justify-center bg-white py-2 border px-8 rounded-md shadow-sm">
-                  <p>Age</p>
-                  <p className="font-semibold">{adoption?.pet.age}</p>
-                </div>
-                <div className="flex flex-col items-center justify-center bg-white py-2 border px-8 rounded-md shadow-sm">
-                  <p>Gender</p>
-                  <p className="font-semibold">
-                    {adoption?.pet.gender.toUpperCase()}
-                  </p>
+                  <div>
+                    <CurrentLocation
+                      lat={adoption?.address.lat}
+                      lon={adoption?.address.lon}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            {/* LOCATION END */}
           </div>
-          <div className="col-span-5 md:col-span-3">
-            {/* CUSTOM DESCRIPTION START */}
-            <div className="border shadow-sm rounded-md p-6 h-full">
-              <div className="px-4 sm:px-0">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Applicant Information
-                </h3>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                  Personal details and application.
+        </div>
+        {/* START */}
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle>Pet Info</CardTitle>
+            <CardDescription>pet details and categories.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-1">
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+              {/* <BellIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Name</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.pet.name}
                 </p>
               </div>
-              <div className="mt-6 border-t border-gray-50">
-                <dl className="divide-y divide-gray-100">
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Full name
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {adoption?.applicant.name}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Mobile No
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {adoption?.phone}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Email address
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {adoption?.email}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      About
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {adoption?.pet.description}
-                    </dd>
-                  </div>
-                </dl>
+            </div>
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 text-accent-foreground transition-all">
+              {/* <PersonIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Phone</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.phone}
+                </p>
               </div>
             </div>
-
-            {/* CUSTOM DESCRIPTION END */}
-          </div>
-        </div>
-        {/* LOCATION START */}
-        <div className="w-full flex flex-col gap-4">
-          <div className="rounded-md border bg-white p-6">
-            <h1 className="text-2xl font-semibold">Location</h1>
-            <div className="flex flex-col">
-              <p className="text-md text-gray-500 py-3">
-                {adoption?.address.address}
-              </p>
-              <div>
-                <CurrentLocation
-                  lat={adoption?.address.lat}
-                  lon={adoption?.address.lon}
-                />
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+              {/* <EyeNoneIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Email</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.email}
+                </p>
               </div>
             </div>
-          </div>
-        </div>
-        {/* LOCATION END */}
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+              {/* <EyeNoneIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">About</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.pet.description}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        {/* END */}
+        {/* START */}
+        <Card className="mt-3">
+          <CardHeader className="pb-3">
+            <CardTitle>Applicant</CardTitle>
+            <CardDescription>Personal details and application.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-1">
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+              {/* <BellIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Full Name</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.applicant.name}
+                </p>
+              </div>
+            </div>
+            <div className="-mx-2 flex items-start space-x-4 rounded-md hover:bg-accent p-2 text-accent-foreground transition-all">
+              {/* <PersonIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Phone</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.phone}
+                </p>
+              </div>
+            </div>
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+              {/* <EyeNoneIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">Email</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.email}
+                </p>
+              </div>
+            </div>
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
+              {/* <EyeNoneIcon className="mt-px h-5 w-5" /> */}
+              <div className="space-y-1">
+                <p className="text-sm font-medium leading-none">About</p>
+                <p className="text-sm text-muted-foreground">
+                  {adoption?.pet.description}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        {/* END */}
         {!adoption?.adopted && (
           <div className="mt-4">
             {!isOwner &&
               (adoptionRequest ? (
                 <div className="p-6 bg-white rounded-md">
                   <p>You have applied already</p>
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-2">
                     Status:{" "}
                     {adoptionRequest.accepted ? (
-                      <p className="text-green-500 font-semibold p-1">
-                        Accepted
-                      </p>
+                      <Badge className="bg-green-500">Accepted</Badge>
                     ) : (
-                      <p className="text-yellow-500 font-semibold p-1">
-                        Pending
-                      </p>
+                      <Badge className="bg-yellow-500">Pending</Badge>
                     )}
                   </div>
                 </div>
               ) : (
-                <ApplyForm adoptionId={adoption?.id as string} />
+                <ApplyForm
+                  adoptionId={adoption?.id as string}
+                  isApplied={isApplied}
+                />
               ))}
           </div>
         )}

@@ -17,6 +17,7 @@ import {
 } from "../ui/card"
 import { Label } from "../ui/label"
 import AdoptionDeleteButton from "./adoption-delete-button"
+import { timeFromNow } from "@/lib/utils"
 
 export interface AdoptionCardProps {
   data: SafeAdoptionListing
@@ -34,7 +35,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
         <CardHeader>
           <CardTitle>{data.pet.name}</CardTitle>
           <CardDescription>
-            Posted on: {data.createdAt.toLocaleString()}
+            Posted on: {timeFromNow(data.createdAt.toLocaleString())}
           </CardDescription>
         </CardHeader>
         <CardContent>

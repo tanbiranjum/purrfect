@@ -12,9 +12,10 @@ import AdoptionCard from "./adoption-card"
 
 type Props = {
   adoptions: SafeAdoptionListing[]
+  col?: number
 }
 
-const AdoptionCardContainer = ({ adoptions }: Props) => {
+const AdoptionCardContainer = ({ adoptions, col }: Props) => {
   const { moreAdoptions, loadMoreAdoptions, loading } = useMoreAdoptions()
 
   return (
@@ -23,7 +24,7 @@ const AdoptionCardContainer = ({ adoptions }: Props) => {
         <div className="text-lg">Sorry No Adoption Found!</div>
       )}
       <Suspense fallback={<Skeleton />}>
-        <div className="grid grid-cols-5 md:grid-cols-4 gap-6">
+        <div className={`grid grid-cols-${col || 4} md:grid-cols-${col || 4} gap-6`}>
           {adoptions?.map((adoption) => (
             <AdoptionCard key={adoption.id} data={adoption} />
           ))}
