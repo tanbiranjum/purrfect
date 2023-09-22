@@ -52,15 +52,15 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
   return (
     <div
       onClick={handleClick}
-      className="flex w-32 cursor-pointer flex-col items-center justify-center border p-4 rounded-md shadow-md bg-white"
+      className="flex w-32 cursor-pointer flex-col items-center justify-center border p-4 rounded-md shadow-md bg-white dark:bg-slate-900"
     >
       {icon}
       <p className="hidden">{name}</p>
       <p className="font-semibold">{label}</p>
       {selected ? (
-        <Separator className="mx-auto mt-2 h-[2px] w-3/5 bg-slate-900" />
+        <Separator className="mx-auto mt-2 h-[2px] w-3/5 bg-slate-900 dark:bg-pink-700" />
       ) : (
-        <Separator className="mx-auto mt-2 h-[2px] w-3/5" />
+        <Separator className="mx-auto mt-2 h-[2px] w-3/5 dark:bg-white" />
       )}
     </div>
   )

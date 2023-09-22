@@ -16,6 +16,14 @@ import {
 
 import AddressNew from "../address/address-new"
 import { Button } from "../ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card"
 
 type Props = {}
 
@@ -80,70 +88,77 @@ const SearchFilter = (props: Props) => {
   }
 
   return (
-    <div className="h-[90vh] bg-white rounded-md">
-    <div className="flex flex-col gap-y-4 p-6 justify-around">
-      <h3 className="font-semibold text-lg">Filter</h3>
-      <Select
-        onValueChange={(value) => {
-          setQuery({ ...query, category: value })
-        }}
-      >
-        <SelectTrigger className="w-full h-10">
-          <SelectValue placeholder="Select species" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Species</SelectLabel>
-            <SelectItem value="cat">Cat</SelectItem>
-            <SelectItem value="dog">Dog</SelectItem>
-            <SelectItem value="bird">Bird</SelectItem>
-            <SelectItem value="rabbit">Rabbit</SelectItem>
-            <SelectItem value="other">Other</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <Select
-        onValueChange={(value) => {
-          setQuery({ ...query, gender: value })
-        }}
-      >
-        <SelectTrigger className="w-full h-10">
-          <SelectValue placeholder="Select gender" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Gender</SelectLabel>
-            <SelectItem value="male">Male</SelectItem>
-            <SelectItem value="female">Female</SelectItem>
-            <SelectItem value="unknown">Unknown</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <Select
-        onValueChange={(value) => {
-          setQuery({ ...query, age: value })
-        }}
-      >
-        <SelectTrigger className="w-full h-10">
-          <SelectValue placeholder="Select age" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Age</SelectLabel>
-            <SelectItem value="0-1">0 - 1</SelectItem>
-            <SelectItem value="1-3">1 - 3</SelectItem>
-            <SelectItem value="3">3+</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <AddressNew {...location} className="h-10 w-full"/>
-      <div className="flex gap-3">
-        <Button className="h-full" onClick={handleReset}>Reset</Button>
-        <Button className="h-full w-full" onClick={handleSearch}>
-          Search
-        </Button>
-      </div>
-    </div>
+    <div className="h-[90vh]">
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle>Filter</CardTitle>
+          <CardDescription></CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-1">
+          <Select
+            onValueChange={(value) => {
+              setQuery({ ...query, category: value })
+            }}
+          >
+            <SelectTrigger className="w-full h-10">
+              <SelectValue placeholder="Select species" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Species</SelectLabel>
+                <SelectItem value="cat">Cat</SelectItem>
+                <SelectItem value="dog">Dog</SelectItem>
+                <SelectItem value="bird">Bird</SelectItem>
+                <SelectItem value="rabbit">Rabbit</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select
+            onValueChange={(value) => {
+              setQuery({ ...query, gender: value })
+            }}
+          >
+            <SelectTrigger className="w-full h-10">
+              <SelectValue placeholder="Select gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Gender</SelectLabel>
+                <SelectItem value="male">Male</SelectItem>
+                <SelectItem value="female">Female</SelectItem>
+                <SelectItem value="unknown">Unknown</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <Select
+            onValueChange={(value) => {
+              setQuery({ ...query, age: value })
+            }}
+          >
+            <SelectTrigger className="w-full h-10">
+              <SelectValue placeholder="Select age" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Age</SelectLabel>
+                <SelectItem value="0-1">0 - 1</SelectItem>
+                <SelectItem value="1-3">1 - 3</SelectItem>
+                <SelectItem value="3">3+</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <AddressNew {...location} className="h-10 w-full" />
+        </CardContent>
+        <CardFooter className="gap-4">
+          <Button className="h-full" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button className="h-full w-full" onClick={handleSearch}>
+            Search
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }

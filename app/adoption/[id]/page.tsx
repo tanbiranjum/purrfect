@@ -40,7 +40,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
     if (adoptionRequest) isApplied = true
   }
   return (
-    <div className="bg-white py-4">
+    <div className="py-4">
       <div className="max-w-screen-xl mx-auto">
         <h2 className="text-4xl font-semibold py-6">{adoption?.pet.name}</h2>
         <div className="grid grid-cols-5 gap-10 pb-8">
@@ -57,22 +57,18 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
           </div>
           <div className="col-span-5 md:col-span-3 flex flex-col justify-between">
             {/* LOCATION START */}
-            <div className="w-full h-full flex flex-col gap-4">
-              <div className="rounded-md border bg-white p-6 h-full">
-                <h1 className="text-2xl font-semibold">Location</h1>
-                <div className="flex flex-col">
-                  <p className="text-md text-gray-500 py-3">
-                    {adoption?.address.address}
-                  </p>
-                  <div>
-                    <CurrentLocation
-                      lat={adoption?.address.lat}
-                      lon={adoption?.address.lon}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Card className="mt-3">
+              <CardHeader className="pb-3">
+                <CardTitle>Location</CardTitle>
+                <CardDescription>{adoption?.address.address}</CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-1">
+                <CurrentLocation
+                  lat={adoption?.address.lat}
+                  lon={adoption?.address.lon}
+                />
+              </CardContent>
+            </Card>
             {/* LOCATION END */}
           </div>
         </div>
@@ -258,7 +254,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
           <div className="mt-4">
             {!isOwner &&
               (adoptionRequest ? (
-                <div className="p-6 bg-white rounded-md">
+                <div className="p-6 rounded-lg border">
                   <p>You have applied already</p>
                   <div className="flex items-center gap-2">
                     Status:{" "}

@@ -30,7 +30,13 @@ const ApplyAdoptionSchema = z.object({
   message: z.string().min(1).max(255),
 })
 
-const ApplyForm = ({ adoptionId, isApplied }: { adoptionId: string, isApplied: boolean }) => {
+const ApplyForm = ({
+  adoptionId,
+  isApplied,
+}: {
+  adoptionId: string
+  isApplied: boolean
+}) => {
   const formLocation = useLocation()
   const [applied, setApplied] = useState(isApplied)
   const form = useForm<z.infer<typeof ApplyAdoptionSchema>>({
@@ -50,10 +56,8 @@ const ApplyForm = ({ adoptionId, isApplied }: { adoptionId: string, isApplied: b
   }
 
   return (
-    <div className="flex flex-col-reverse gap-8 rounded-md bg-white p-6 border">
-      {applied ? (
-        <p className="text-xl">You have already applied!</p>
-      ) : (
+    <div className="flex flex-col-reverse gap-8 rounded-md bg-white dark:bg-slate-900 p-6 border">
+      {!applied && (
         <Form {...form}>
           <form
             className="flex flex-col gap-3 max-w-2xl"
