@@ -26,7 +26,7 @@ export default async function IndexPage({ searchParams }: IndexPageProps) {
       <section className="container">
         <div className="px-4 py-16 sm:px-6 sm:py-8 lg:px-8 bg-white rounded-md">
           <div className="mt-8 grid grid-cols-5 gap-12">
-            <div className="relative h-64 overflow-hidden sm:h-80 lg:h-full col-span-2">
+            <div className="relative h-64 overflow-hidden sm:h-80 lg:h-full col-span-5 lg:col-span-2">
               <AspectRatio ratio={4 / 3}>
                 <Image
                   fill
@@ -37,7 +37,7 @@ export default async function IndexPage({ searchParams }: IndexPageProps) {
               </AspectRatio>
             </div>
 
-            <div className="col-span-3">
+            <div className="col-span-5 lg:col-span-3">
               <h2 className="text-3xl font-bold sm:text-4xl pb-3">
                 Transform Lives Through Love.
               </h2>

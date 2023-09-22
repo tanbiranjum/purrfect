@@ -1,10 +1,12 @@
 "use client"
 
 import React, { useTransition } from "react"
+import { useRouter } from "next/navigation"
 import axios from "axios"
 import { MoreHorizontal } from "lucide-react"
 
 import useAcceptModal from "@/hooks/use-accept-modal"
+import useDetailModal from "@/hooks/use-detail-modal"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -15,16 +17,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Modal from "@/components/modal/modal"
-import { useRouter } from "next/navigation"
 
 type Props = {
   id: string
   userId: string
   adoptionApplicationId: string
+  message: string | null
 }
 
-const ActionConfirm = ({ id, userId, adoptionApplicationId }: Props) => {
+const ActionConfirm = ({ id, userId, message, adoptionApplicationId }: Props) => {
   const acceptModal = useAcceptModal()
+  const detailModal = useDetailModal()
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
 
@@ -39,26 +42,27 @@ const ActionConfirm = ({ id, userId, adoptionApplicationId }: Props) => {
       userId,
     })
 
-    if(response.status === 201) {
+    if (response.status === 201) {
       alert("Adoption Confirmed!")
       acceptModal.close()
       startTransition(() => {
         // Refresh the current route and fetch new data from the server without
         // losing client-side browser or React state.
-        router.refresh();
-      });
+        router.refresh()
+      })
     } else {
       acceptModal.close()
     }
   }
 
-  const toggle = () => {
-    if (acceptModal.isOpen) {
-      acceptModal.close()
+  const toggle = (store: any) => {
+    if (store.isOpen) {
+      store.close()
     } else {
-      acceptModal.open()
+      store.open()
     }
   }
+
   return (
     <>
       <DropdownMenu>
@@ -70,7 +74,9 @@ const ActionConfirm = ({ id, userId, adoptionApplicationId }: Props) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem>View Details</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => detailModal.open()}>
+            View Details
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="text-green-800"
@@ -83,7 +89,7 @@ const ActionConfirm = ({ id, userId, adoptionApplicationId }: Props) => {
       <Modal
         name="Are you sure, you want to confirm?"
         isOpen={acceptModal.isOpen}
-        toggle={toggle}
+        toggle={() => toggle(acceptModal)}
       >
         <div className="flex gap-2">
           <Button
@@ -96,6 +102,15 @@ const ActionConfirm = ({ id, userId, adoptionApplicationId }: Props) => {
           <Button variant="destructive" onClick={() => acceptModal.close()}>
             Cancel
           </Button>
+        </div>
+      </Modal>
+      <Modal
+        name="Details"
+        isOpen={detailModal.isOpen}
+        toggle={() => toggle(detailModal)}
+      >
+        <div>
+          {message}
         </div>
       </Modal>
     </>

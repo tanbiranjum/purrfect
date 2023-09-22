@@ -45,13 +45,21 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
           <MainNav items={siteConfig.mainNav} />
           <div className="flex flex-1 items-center justify-end space-x-4">
             {currentUser && (
-              <Button onClick={() => useAdoption.open()}>
+              <Button
+                onClick={() => useAdoption.open()}
+                className="hidden md:block"
+              >
                 Register an Adoption
               </Button>
             )}
             <div>
               {/* Search Trigger Button */}
-              <Button onClick={() => useSearch.open()}>Search a Pet</Button>
+              <Button
+                onClick={() => useSearch.open()}
+                className="hidden md:block"
+              >
+                Search a Pet
+              </Button>
             </div>
             <nav className="flex items-center space-x-1">
               <Menubar>
@@ -59,7 +67,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                   <MenubarTrigger className="gap-2">
                     <Icons.menu />
                     <Avatar className="h-6 w-6">
-                      <AvatarImage src={currentUser?.image as string}/>
+                      <AvatarImage src={currentUser?.image as string} />
                       <AvatarFallback>User</AvatarFallback>
                     </Avatar>
                   </MenubarTrigger>
@@ -98,6 +106,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noreferrer"
+                className="hidden md:block"
               >
                 <div
                   className={buttonVariants({
@@ -113,6 +122,7 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                 href={siteConfig.links.twitter}
                 target="_blank"
                 rel="noreferrer"
+                className="hidden md:block"
               >
                 <div
                   className={buttonVariants({

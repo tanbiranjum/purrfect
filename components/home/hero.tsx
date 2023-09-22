@@ -9,7 +9,7 @@ const Hero = () => {
     <section className="dark:bg-gray-800 dark:text-gray-100 h-[90vh]">
       <div className="container flex flex-col justify-center items-center h-full text-center p-6 mx-auto sm:py-6 lg:py-10">
         <Badge variant="secondary" className="bg-slate-200 px-3 py-2 text-sm">Follow us on Twitter</Badge>
-        <h1 className="text-6xl font-bold sm:text-7xl max-w-5xl mx-auto">
+        <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold sm:text-7xl max-w-5xl mx-auto">
           Find your pet the safe house you always wanted.
         </h1>
         <p className="mt-6 mb-8 text-xl sm:mb-12 text-slate-600">

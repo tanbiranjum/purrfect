@@ -1,20 +1,6 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import axios from "axios"
-import { MoreHorizontal } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Modal from "@/components/modal/modal"
-
 import ActionConfirm from "./action-confirm"
 
 export type AdoptionRequest = {
@@ -24,6 +10,7 @@ export type AdoptionRequest = {
   phone: string | null
   status: boolean
   userId: string
+  message: string | null
   adoptionApplicationId: string | null
 }
 
@@ -74,12 +61,13 @@ export const columns: ColumnDef<AdoptionRequest>[] = [
   {
     id: "id",
     cell: ({ row }) => {
-      const { id, userId, adoptionApplicationId } = row.original
+      const { id, userId, message, adoptionApplicationId } = row.original
       return (
         <ActionConfirm
           id={id}
           userId={userId}
           adoptionApplicationId={adoptionApplicationId as string}
+          message={message}
         />
       )
     },

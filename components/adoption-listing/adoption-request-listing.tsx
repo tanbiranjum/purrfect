@@ -35,6 +35,7 @@ const AdoptionRequestListing: React.FC<AdoptionRequestListingParams> = ({
       email: request.email,
       phone: request.phone,
       status: request.accepted,
+      message: request.message,
       userId: request.applicantId,
       adoptionApplicationId: request.adoptionApplicationId || null
     }

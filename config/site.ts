@@ -5,10 +5,6 @@ export const siteConfig = {
   description: "Adopt your soulmate and true companion.",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
-    },
-    {
       title: 'Adoption',
       href: "/adoption"
     },
@@ -18,8 +14,8 @@ export const siteConfig = {
     }
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
+    twitter: "https://twitter.com/imtanbirr",
+    github: "https://github.com/tanbiranjum",
     docs: "https://ui.shadcn.com",
   },
 }
