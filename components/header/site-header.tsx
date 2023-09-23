@@ -66,10 +66,12 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                 <MenubarMenu>
                   <MenubarTrigger className="gap-2">
                     <Icons.menu />
-                    <Avatar className="h-6 w-6">
-                      <AvatarImage src={currentUser?.image as string} />
-                      <AvatarFallback>User</AvatarFallback>
-                    </Avatar>
+                    {currentUser && (
+                      <Avatar className="h-6 w-6">
+                        <AvatarImage src={currentUser?.image as string} />
+                        <AvatarFallback>User</AvatarFallback>
+                      </Avatar>
+                    )}
                   </MenubarTrigger>
                   <MenubarContent>
                     {currentUser ? (
