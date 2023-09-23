@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import AdoptionCardContainer from "@/components/adoption-listing/adoption-card-container"
 import Categories from "@/components/header/categories"
@@ -5,7 +7,6 @@ import Hero from "@/components/home/hero"
 
 import getAdoptionListings from "./actions/get-adoption-listings"
 import { IFilterParams } from "./types"
-import Image from "next/image"
 
 interface IndexPageProps {
   searchParams: IFilterParams
@@ -21,7 +22,7 @@ export default async function IndexPage({ searchParams }: IndexPageProps) {
       <section className="mx-auto max-w-3xl">
         <Categories />
       </section>
-      <AdoptionCardContainer adoptions={adoptions}/>
+      <AdoptionCardContainer adoptions={adoptions} />
       {/* CTA ACTION */}
       <section className="container">
         <div className="rounded-md bg-slate-100 px-4 py-16 dark:bg-slate-900 sm:px-6 sm:py-8 lg:px-8">
@@ -43,25 +44,14 @@ export default async function IndexPage({ searchParams }: IndexPageProps) {
               </h2>
               <article className="space-y-4 text-gray-600">
                 <p>
-                  Choosing to adopt a pet is an act of compassion that not only
-                  changes their life but also enriches your own. Every adopted
-                  pet has a unique story—a tale of hope, resilience, and second
-                  chances. By opening your heart and home to adoption, you
-                  provide a loving sanctuary to a pet who may have faced
-                  hardship or abandonment.
+                  {
+                    "Choosing to adopt a pet is an act of compassion that not only changes their life but also enriches your own. Every adopted pet has a unique story—a tale of hope, resilience, and second chances. By opening your heart and home to adoption, you provide a loving sanctuary to a pet who may have faced hardship or abandonment."
+                  }
                 </p>
                 <p>
-                  The bond between an adoptive family and their pet is
-                  unparalleled. It's a relationship built on trust, loyalty, and
-                  shared experiences. Pets bring joy, comfort, and a sense of
-                  purpose to our lives. They teach us valuable life lessons, and
-                  their presence adds immeasurable happiness to our daily
-                  routines. So, why choose adoption? Because it's a chance to
-                  make a profound difference. By adopting, you become part of a
-                  compassionate community that values kindness and empathy. You
-                  get to witness the incredible transformation of a shelter pet
-                  into a cherished family member. You have the opportunity to
-                  save a soul and bring happiness to a life in need.
+                  {
+                    "The bond between an adoptive family and their pet is unparalleled. It's a relationship built on trust, loyalty, and shared experiences. Pets bring joy, comfort, and a sense of purpose to our lives. They teach us valuable life lessons, and their presence adds immeasurable happiness to our daily routines. So, why choose adoption? Because it's a chance to make a profound difference. By adopting, you become part of a compassionate community that values kindness and empathy. You get to witness the incredible transformation of a shelter pet into a cherished family member. You have the opportunity to save a soul and bring happiness to a life in need."
+                  }
                 </p>
               </article>
             </div>

@@ -15,6 +15,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import getCurrentUser from "./actions/get-current-user"
 import AuthProvider from "./providers/auth-provider"
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +43,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
-        <head />
+        <Head>
+          <title>Purrfect - Pet adoption website</title>
+        </Head>
         <body
           className={cn(
             "min-h-screen font-sans antialiased",
