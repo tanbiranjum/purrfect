@@ -14,7 +14,6 @@ const useUploadImage = () => {
             | undefined
         ) => {
           const fileUrl = res?.map((file: any) => file.fileUrl)[0]
-          alert("uploaded successfully!")
         },
         onUploadError: () => {
           alert("error occurred while uploading")
