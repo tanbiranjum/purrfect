@@ -78,7 +78,7 @@ const AddressNew = ({
       <div className="relative">
         <Input
         // TODO: remove the constant className style 
-          className={`w-56 h-14 ${className}`}
+          className={`h-14 w-56 ${className}`}
           placeholder="Search location"
           autoComplete="off"
           value={address}

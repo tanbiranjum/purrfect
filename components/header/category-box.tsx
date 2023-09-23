@@ -52,7 +52,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
   return (
     <div
       onClick={handleClick}
-      className="flex w-32 cursor-pointer flex-col items-center justify-center border p-4 rounded-md shadow-md bg-white dark:bg-slate-900"
+      className="flex w-32 cursor-pointer flex-col items-center justify-center rounded-md border bg-white p-4 shadow-md dark:bg-slate-900"
     >
       {icon}
       <p className="hidden">{name}</p>

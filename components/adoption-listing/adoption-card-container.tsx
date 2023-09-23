@@ -24,7 +24,7 @@ const AdoptionCardContainer = ({ adoptions, col }: Props) => {
         <div className="text-lg">Sorry No Adoption Found!</div>
       )}
       <Suspense fallback={<Skeleton />}>
-        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6`}>
+        <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4`}>
           {adoptions?.map((adoption) => (
             <AdoptionCard key={adoption.id} data={adoption} />
           ))}
@@ -33,7 +33,7 @@ const AdoptionCardContainer = ({ adoptions, col }: Props) => {
           ))}
         </div>
       </Suspense>
-      <div className="flex justify-center mt-3">
+      <div className="mt-3 flex justify-center">
         <Button onClick={loadMoreAdoptions} disabled={loading}>
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Load More

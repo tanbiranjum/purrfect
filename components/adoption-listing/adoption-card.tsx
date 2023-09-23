@@ -49,7 +49,7 @@ const AdoptionCard: React.FC<AdoptionCardProps> = ({
             />
           </AspectRatio>
         </CardContent>
-        <CardFooter className="flex gap-2 flex-wrap">
+        <CardFooter className="flex flex-wrap gap-2">
           <Badge variant="secondary">{data.pet.gender}</Badge>
           <Badge variant="secondary">{data.pet.age} years</Badge>
           <Badge variant="secondary">

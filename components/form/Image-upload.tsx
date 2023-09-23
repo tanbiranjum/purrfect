@@ -22,7 +22,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ files, setFiles }) => {
   })
 
   return (
-    <div className="h-48 w-48 border-2 flex justify-center items-center rounded-md">
+    <div className="flex h-48 w-48 items-center justify-center rounded-md border-2">
       {files.length === 0 && (
         <div {...getRootProps()} className="cursor-pointer p-4">
           <div className="flex justify-center py-4">
@@ -35,7 +35,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ files, setFiles }) => {
             />
           </div>
           <input {...getInputProps()} />
-          <div className="bg-slate-400 text-sm text-white px-2 py-1 font-semibold rounded-full">
+          <div className="rounded-full bg-slate-400 px-2 py-1 text-sm font-semibold text-white">
             Drag or Click Here
           </div>
         </div>
@@ -47,7 +47,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ files, setFiles }) => {
           width={0}
           height={0}
           sizes="100vw"
-          className="w-full h-auto"
+          className="h-auto w-full"
         />
       )}
     </div>

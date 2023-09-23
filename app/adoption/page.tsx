@@ -19,8 +19,8 @@ const AdoptionPage = async ({ searchParams }: AdoptionPageProps) => {
   const adoptions = await getAdoptionListings(searchParams)
 
   return (
-    <section className="h-[90vh] mt-10">
-      <div className="container grid grid-cols-8 h-full">
+    <section className="mt-10 h-[90vh]">
+      <div className="container grid h-full grid-cols-8">
         <div className="col-span-2">
           <SearchFilter />
         </div>

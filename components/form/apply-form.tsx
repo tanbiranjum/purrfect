@@ -56,11 +56,11 @@ const ApplyForm = ({
   }
 
   return (
-    <div className="flex flex-col-reverse gap-8 rounded-md bg-white dark:bg-slate-900 p-6 border">
+    <div className="flex flex-col-reverse gap-8 rounded-md border bg-white p-6 dark:bg-slate-900">
       {!applied && (
         <Form {...form}>
           <form
-            className="flex flex-col gap-3 max-w-2xl"
+            className="flex max-w-2xl flex-col gap-3"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <FormInput
@@ -69,7 +69,7 @@ const ApplyForm = ({
               label="Your name"
               placeholder="name"
             />
-            <div className="grid grid-cols-2 gap-6 w-full">
+            <div className="grid w-full grid-cols-2 gap-6">
               <FormInput
                 form={form}
                 name="phone"
@@ -106,7 +106,7 @@ const ApplyForm = ({
             <Button
               type="submit"
               disabled={applied}
-              className="mt-4 p-4 text-lg uppercase w-40"
+              className="mt-4 w-40 p-4 text-lg uppercase"
             >
               Apply
             </Button>

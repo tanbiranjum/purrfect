@@ -41,11 +41,11 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
   }
   return (
     <div className="py-4">
-      <div className="max-w-screen-xl mx-auto">
-        <h2 className="text-4xl font-semibold py-6">{adoption?.pet.name}</h2>
+      <div className="mx-auto max-w-screen-xl">
+        <h2 className="py-6 text-4xl font-semibold">{adoption?.pet.name}</h2>
         <div className="grid grid-cols-5 gap-10 pb-8">
           <div className="col-span-5 md:col-span-2">
-            <div className="rounded-md flex flex-col gap-4">
+            <div className="flex flex-col gap-4 rounded-md">
               <Image
                 src={adoption?.pet.imageSrc as string}
                 alt="pet image"
@@ -55,14 +55,14 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
               />
             </div>
           </div>
-          <div className="col-span-5 md:col-span-3 flex flex-col justify-between">
+          <div className="col-span-5 flex flex-col justify-between md:col-span-3">
             {/* LOCATION START */}
             <Card className="h-full">
               <CardHeader className="pb-3">
                 <CardTitle>Location</CardTitle>
                 <CardDescription>{adoption?.address.address}</CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-1 h-full">
+              <CardContent className="grid h-full gap-1">
                 <CurrentLocation
                   lat={adoption?.address.lat}
                   lon={adoption?.address.lon}
@@ -86,7 +86,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -108,7 +108,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -135,7 +135,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -167,7 +167,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -182,14 +182,14 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 </p>
               </div>
             </div>
-            <div className="-mx-2 flex items-start space-x-4 rounded-md hover:bg-accent p-2 text-accent-foreground transition-all">
+            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 text-accent-foreground transition-all hover:bg-accent">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -211,7 +211,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
@@ -225,14 +225,14 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 </p>
               </div>
             </div>
-            <div className="-mx-2 flex items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground w-full">
+            <div className="-mx-2 flex w-full items-start space-x-4 rounded-md p-2 transition-all hover:bg-accent hover:text-accent-foreground">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-6 h-6 flex-shrink-0"
+                className="h-6 w-6 shrink-0"
               >
                 <path
                   strokeLinecap="round"
@@ -254,7 +254,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
           <div className="mt-4">
             {!isOwner &&
               (adoptionRequest ? (
-                <div className="p-6 rounded-lg border">
+                <div className="rounded-lg border p-6">
                   <p>You have applied already</p>
                   <div className="flex items-center gap-2">
                     Status:{" "}

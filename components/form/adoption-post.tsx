@@ -112,7 +112,7 @@ const AdoptionPost = (props: Props) => {
           e.preventDefault()
           form.handleSubmit(onSubmit)()
         }}
-        className="bg-white p-4 rounded-md"
+        className="rounded-md bg-white p-4"
       >
         <div className="grid grid-cols-6 py-8">
           <div className="col-span-2">
@@ -180,8 +180,8 @@ const AdoptionPost = (props: Props) => {
               />
             </div>
             <div>
-              <p className="text-sm font-semibold py-2">Enter your address</p>
-              <AddressNew {...formLocation} className="w-full h-auto py-3" />
+              <p className="py-2 text-sm font-semibold">Enter your address</p>
+              <AddressNew {...formLocation} className="h-auto w-full py-3" />
             </div>
             <FormField
               control={form.control}

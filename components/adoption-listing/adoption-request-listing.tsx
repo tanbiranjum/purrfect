@@ -42,7 +42,7 @@ const AdoptionRequestListing: React.FC<AdoptionRequestListingParams> = ({
   })
 
   return (
-    <div className="bg-white p-6 rounded-md">
+    <div className="rounded-md bg-white p-6">
       <h1 className="text-2xl font-semibold">Requests</h1>
       {adoptionRequestListings?.length === 0 && <div>No request found!</div>}
       <div className="mt-2">

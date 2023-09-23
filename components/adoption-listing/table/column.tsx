@@ -40,11 +40,11 @@ export const columns: ColumnDef<AdoptionRequest>[] = [
         ? "Accepted".toUpperCase()
         : "Pending".toUpperCase()
       return !status ? (
-        <div className="inline-block bg-yellow-200 text-yellow-800 font-semibold  px-3 py-1 rounded-lg tex-sm">
+        <div className="tex-sm inline-block rounded-lg bg-yellow-200  px-3 py-1 font-semibold text-yellow-800">
           {formatted}
         </div>
       ) : (
-        <div className="inline-block bg-green-200 text-green-800 font-semibold px-3 py-1 rounded-lg text-sm">
+        <div className="inline-block rounded-lg bg-green-200 px-3 py-1 text-sm font-semibold text-green-800">
           {formatted}
         </div>
       )

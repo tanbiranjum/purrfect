@@ -18,27 +18,27 @@ export default async function IndexPage({ searchParams }: IndexPageProps) {
       <section>
         <Hero />
       </section>
-      <section className="max-w-3xl mx-auto">
+      <section className="mx-auto max-w-3xl">
         <Categories />
       </section>
       <AdoptionCardContainer adoptions={adoptions}/>
       {/* CTA ACTION */}
       <section className="container">
-        <div className="px-4 py-16 sm:px-6 sm:py-8 lg:px-8 bg-slate-100 dark:bg-slate-900 rounded-md">
+        <div className="rounded-md bg-slate-100 px-4 py-16 dark:bg-slate-900 sm:px-6 sm:py-8 lg:px-8">
           <div className="mt-8 grid grid-cols-5 gap-12">
-            <div className="relative h-64 overflow-hidden sm:h-80 lg:h-full col-span-5 lg:col-span-2">
+            <div className="relative col-span-5 h-64 overflow-hidden sm:h-80 lg:col-span-2 lg:h-full">
               <AspectRatio ratio={4 / 3}>
                 <Image
                   fill
                   alt="Party"
                   src="https://images.unsplash.com/photo-1620379876467-b77f993b3674?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
-                  className="absolute inset-0 h-full w-full object-cover rounded-md"
+                  className="absolute inset-0 h-full w-full rounded-md object-cover"
                 />
               </AspectRatio>
             </div>
 
             <div className="col-span-5 lg:col-span-3">
-              <h2 className="text-3xl font-bold sm:text-4xl pb-3">
+              <h2 className="pb-3 text-3xl font-bold sm:text-4xl">
                 Transform Lives Through Love.
               </h2>
               <article className="space-y-4 text-gray-600">

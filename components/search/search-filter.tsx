@@ -100,7 +100,7 @@ const SearchFilter = (props: Props) => {
               setQuery({ ...query, category: value })
             }}
           >
-            <SelectTrigger className="w-full h-10">
+            <SelectTrigger className="h-10 w-full">
               <SelectValue placeholder="Select species" />
             </SelectTrigger>
             <SelectContent>
@@ -119,7 +119,7 @@ const SearchFilter = (props: Props) => {
               setQuery({ ...query, gender: value })
             }}
           >
-            <SelectTrigger className="w-full h-10">
+            <SelectTrigger className="h-10 w-full">
               <SelectValue placeholder="Select gender" />
             </SelectTrigger>
             <SelectContent>
@@ -136,7 +136,7 @@ const SearchFilter = (props: Props) => {
               setQuery({ ...query, age: value })
             }}
           >
-            <SelectTrigger className="w-full h-10">
+            <SelectTrigger className="h-10 w-full">
               <SelectValue placeholder="Select age" />
             </SelectTrigger>
             <SelectContent>
