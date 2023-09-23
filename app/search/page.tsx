@@ -1,8 +1,7 @@
 import React from "react"
 
 import AdoptionCard from "@/components/adoption-listing/adoption-card"
-
-import getSearchedAdoptions from "../actions/search-adoption"
+import getAdoptionListings from "../actions/get-adoption-listings"
 
 interface SearchPageParams {
   searchParams: {
@@ -13,7 +12,8 @@ interface SearchPageParams {
 }
 
 const SearchPage = async ({ searchParams }: SearchPageParams) => {
-  const adoptions = await getSearchedAdoptions(searchParams)
+  const adoptions = await getAdoptionListings(searchParams)
+  
   return (
     <div className="container">
       <h1 className="py-8 text-center text-2xl font-bold">Search Results</h1>
