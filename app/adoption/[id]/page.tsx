@@ -57,12 +57,12 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
           </div>
           <div className="col-span-5 md:col-span-3 flex flex-col justify-between">
             {/* LOCATION START */}
-            <Card className="mt-3">
+            <Card className="h-full">
               <CardHeader className="pb-3">
                 <CardTitle>Location</CardTitle>
                 <CardDescription>{adoption?.address.address}</CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-1">
+              <CardContent className="grid gap-1 h-full">
                 <CurrentLocation
                   lat={adoption?.address.lat}
                   lon={adoption?.address.lon}
@@ -232,7 +232,7 @@ const AdoptionPage = async ({ params }: { params: { id: string } }) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="w-14 h-14"
+                className="w-6 h-6 flex-shrink-0"
               >
                 <path
                   strokeLinecap="round"

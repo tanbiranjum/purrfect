@@ -41,11 +41,11 @@ const CurrentLocation = ({ lat, lon }: Props) => {
     alert("There is an error getting your current information!")
   }
   return (
-    <div>
+    <div className="h-full">
       <Map
         location={[lat as number, lon as number]}
         zoom={zoom}
-        className="w-full h-80"
+        className="w-full h-2/3"
       >
         {polylinePositions.length > 1 && (
           <>
