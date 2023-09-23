@@ -2,6 +2,7 @@ import prisma from "@/lib/prismadb"
 import { IFilterParams } from "../types"
 
 type Query = {
+  applicantId?: string,
   pet?: {
     adopted?: {
       equals: boolean
@@ -30,7 +31,7 @@ type Query = {
 }
 
 export default async function getAdoptionListings(searchParams: IFilterParams) {
-  const { adopted, category, lat, lon, age, gender, page } = searchParams
+  const { adopted, category, lat, lon, age, gender, page, applicantId } = searchParams
 
   const currentPage = page || 1
   const limit = 8
@@ -100,6 +101,9 @@ export default async function getAdoptionListings(searchParams: IFilterParams) {
         gte: lon * 1 - 0.1,
       },
     }
+  }
+  if(applicantId) {
+    query.applicantId = applicantId
   }
 
   const adoptions = await prisma.adoptionApplication.findMany({

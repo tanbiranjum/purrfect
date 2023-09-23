@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 
 import PetCard from "@/components/adoption-listing/adoption-card"
-import getAdoptionListing from "@/app/actions/get-adoption-listings"
+import getAdoptionListings from "@/app/actions/get-adoption-listings"
 import getCurrentUser from "@/app/actions/get-current-user"
 import { SafeAdoptionListing } from "@/app/types"
 
@@ -15,8 +15,8 @@ const getAdoptedPets = (adoptions: any) => {
 
 const AdoptionStatusPage = async () => {
   const currentUser = await getCurrentUser()
-  const adoptions = await getAdoptionListing({
-    ownerId: currentUser?.id,
+  const adoptions = await getAdoptionListings({
+    applicantId: currentUser?.id
   })
   return (
     <div className="container">

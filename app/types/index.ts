@@ -48,4 +48,5 @@ export interface IFilterParams {
   age?: string
   gender?: string
   page?: number
+  applicantId?: string
 }
