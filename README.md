@@ -66,4 +66,5 @@ Technologies used in the project:
 *   MongoDB
 
 <h2>🛡️ License:</h2>
+
 Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
