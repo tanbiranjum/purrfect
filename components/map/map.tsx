@@ -1,4 +1,5 @@
 "use client"
+
 import React from "react"
 import L, { LatLngTuple } from "leaflet"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
@@ -8,6 +9,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png"
 import markerIcon from "leaflet/dist/images/marker-icon.png"
 import markerShadow from "leaflet/dist/images/marker-shadow.png"
 
+import ClientOnly from "../client-only"
 import ChangeView from "./change-view"
 
 // @ts-ignore
@@ -27,24 +29,24 @@ type Props = {
 
 const Map = ({ location, className, zoom, children }: Props) => {
   return (
-    <MapContainer
-      center={(location as LatLngTuple) || [51.505, -0.09]}
-      zoom={zoom || 13}
-      scrollWheelZoom={false}
-      className={`h-[35vh] rounded-lg ${className}`}
-    >
-      <ChangeView center={location as LatLngTuple} zoom={13} />
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={location as LatLngTuple}>
-        <Popup>
-          Purrfect Adoption
-        </Popup>
-      </Marker>
-      {children}
-    </MapContainer>
+    <ClientOnly>
+      <MapContainer
+        center={(location as LatLngTuple) || [51.505, -0.09]}
+        zoom={zoom || 13}
+        scrollWheelZoom={false}
+        className={`h-[35vh] rounded-lg ${className}`}
+      >
+        <ChangeView center={location as LatLngTuple} zoom={13} />
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={location as LatLngTuple}>
+          <Popup>Purrfect Adoption</Popup>
+        </Marker>
+        {children}
+      </MapContainer>
+    </ClientOnly>
   )
 }
 
