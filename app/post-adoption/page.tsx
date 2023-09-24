@@ -1,10 +1,16 @@
 import React from "react"
 
 import AdoptionPost from "@/components/form/adoption-post"
+import getCurrentUser from "../actions/get-current-user"
+import { redirect } from "next/navigation"
 
 type Props = {}
 
-const PostAdoptionPage = (props: Props) => {
+const PostAdoptionPage = async (props: Props) => {
+  const user = await getCurrentUser()
+  if(!user) {
+    return redirect('/')
+  }
   return (
     <div className="bg-white py-8">
       <div className="mx-auto max-w-3xl">
