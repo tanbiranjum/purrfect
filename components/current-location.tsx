@@ -45,7 +45,7 @@ const CurrentLocation = ({ lat, lon }: Props) => {
       <Map
         location={[lat as number, lon as number]}
         zoom={zoom}
-        className="h-2/3 w-full"
+        className="h-80 w-full"
       >
         {polylinePositions.length > 1 && (
           <>

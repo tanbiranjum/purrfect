@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 
 import PetCard from "@/components/adoption-listing/adoption-card"
 import getAdoptionListings from "@/app/actions/get-adoption-listings"
