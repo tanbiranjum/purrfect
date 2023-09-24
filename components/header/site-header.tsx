@@ -1,7 +1,8 @@
 "use client"
 
-import React from "react"
+import React, { useEffect } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { User } from "@prisma/client"
 import { signOut } from "next-auth/react"
 
@@ -33,10 +34,21 @@ interface SiteHeaderProps {
 }
 
 export function SiteHeader({ currentUser }: SiteHeaderProps) {
+  const params = useSearchParams()
   const useLogin = useLoginModal()
   const useRegister = useRegisterModal()
   const useAdoption = useAdoptionModal()
   const useSearch = useSearchModal()
+
+  useEffect(() => {
+    if (params?.has("login")) {
+      useLogin.open()
+    }
+
+    if (params?.has("register")) {
+      useRegister.open()
+    }
+  }, [params.toString()])
 
   return (
     <header className="top-0 z-40 w-full bg-background">

@@ -9,7 +9,7 @@ type Props = {}
 const PostAdoptionPage = async (props: Props) => {
   const user = await getCurrentUser()
   if(!user) {
-    return redirect('/')
+    return redirect('/?login')
   }
   return (
     <div className="bg-white py-8">

@@ -1,8 +1,9 @@
 import "@/styles/globals.css"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import "@uploadthing/react/styles.css";
+import "@uploadthing/react/styles.css"
 import { Metadata } from "next"
+import Head from "next/head"
 import { Toaster } from "react-hot-toast"
 
 import { siteConfig } from "@/config/site"
@@ -15,7 +16,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import getCurrentUser from "./actions/get-current-user"
 import AuthProvider from "./providers/auth-provider"
-import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {
@@ -51,6 +51,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             "min-h-screen font-sans antialiased",
             fontSans.variable
           )}
+          suppressHydrationWarning={true}
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <AuthProvider currentUser={currentUser}>
@@ -62,8 +63,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             </AuthProvider>
           </ThemeProvider>
           <Toaster />
+          <Footer />
         </body>
-        <Footer />
       </html>
     </>
   )

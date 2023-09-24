@@ -26,10 +26,6 @@ type Props = {
 }
 
 const Map = ({ location, className, zoom, children }: Props) => {
-  // const MapContainer = dynamic(async ()=> (await import('react-leaflet')).MapContainer, {ssr: false})
-  // const Marker = dynamic(async ()=> (await import('react-leaflet')).Marker, {ssr: false})
-  // const Popup = dynamic(async ()=> (await import('react-leaflet')).Popup, {ssr: false})
-  // const TileLayer = dynamic(async ()=> (await import('react-leaflet')).TileLayer, {ssr: false})
   return (
     <ClientOnly>
       <MapContainer
