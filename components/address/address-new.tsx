@@ -1,8 +1,9 @@
 "use client"
 
 import React, { SetStateAction, useEffect, useState } from "react"
+import dynamic from "next/dynamic"
 
-import Map from "../map/map"
+import ClientOnly from "../client-only"
 import { Input } from "../ui/input"
 
 type Props = {
@@ -24,17 +25,19 @@ type Props = {
 
 const BASE_URL = "https://nominatim.openstreetmap.org/search?"
 
+const DynamicMap = dynamic(() => import("../map/map"), { ssr: false })
+
 const AddressNew = ({
   includeMap,
   location,
   setLocation,
   address,
   setAddress,
-  className
+  className,
 }: Props) => {
   const [addresses, setAddresses] = useState([])
   const [suggestionDisplay, setSuggestionDisplay] = useState(false)
-  const [selectedAddress, setSelectedAddress] = useState('')
+  const [selectedAddress, setSelectedAddress] = useState("")
   const [selected, setSelected] = useState(false)
 
   useEffect(() => {
@@ -77,7 +80,7 @@ const AddressNew = ({
     <div>
       <div className="relative">
         <Input
-        // TODO: remove the constant className style 
+          // TODO: remove the constant className style
           className={`h-14 w-56 ${className}`}
           placeholder="Search location"
           autoComplete="off"
@@ -101,7 +104,9 @@ const AddressNew = ({
       </div>
       {includeMap && (
         <div className="mt-6">
-          <Map location={[location.lat, location.lon]} />
+          <ClientOnly>
+            <DynamicMap location={[location.lat, location.lon]} />
+          </ClientOnly>
         </div>
       )}
     </div>

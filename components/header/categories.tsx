@@ -6,35 +6,34 @@ import Slider, { Settings } from "react-slick"
 
 import { Icons } from "../icons"
 import CategoryBox from "./category-box"
-import { Cat, Dog, Egg } from "lucide-react"
 
 export const categories = [
   {
-    icon: <Cat/>,
+    icon: <Icons.cat />,
     label: "Find cat",
     name: "cat",
     description: "Cute kitty cat",
   },
   {
-    icon: <Dog/>,
+    icon: <Icons.dog />,
     label: "Find dog",
     name: "dog",
     description: "Your best friend and companion",
   },
   {
-    icon: <Icons.rabbit/>,
+    icon: <Icons.rabbit />,
     label: "Find rabbit",
     name: "rabbit",
     description: "Forest starts here",
   },
   {
-    icon: <Icons.bird height="25"/>,
+    icon: <Icons.bird height="25" />,
     label: "Find bird",
     name: "bird",
     description: "Forest starts here",
   },
   {
-    icon: <Egg/>,
+    icon: <Icons.egg />,
     label: "others",
     name: "others",
     description: "Tent starts here",
@@ -92,24 +91,24 @@ const Categories = () => {
           slidesToShow: 4,
           slidesToScroll: 3,
           infinite: true,
-        }
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   }
 
   return (

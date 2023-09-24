@@ -5,9 +5,10 @@ import "leaflet/dist/leaflet.css"
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png"
 import markerIcon from "leaflet/dist/images/marker-icon.png"
 import markerShadow from "leaflet/dist/images/marker-shadow.png"
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 
+import ClientOnly from "../client-only"
 import ChangeView from "./change-view"
-import dynamic from "next/dynamic"
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl
@@ -25,11 +26,12 @@ type Props = {
 }
 
 const Map = ({ location, className, zoom, children }: Props) => {
-  const MapContainer = dynamic(async ()=> (await import('react-leaflet')).MapContainer, {ssr: false})
-  const Marker = dynamic(async ()=> (await import('react-leaflet')).Marker, {ssr: false})
-  const Popup = dynamic(async ()=> (await import('react-leaflet')).Popup, {ssr: false})
-  const TileLayer = dynamic(async ()=> (await import('react-leaflet')).TileLayer, {ssr: false})
+  // const MapContainer = dynamic(async ()=> (await import('react-leaflet')).MapContainer, {ssr: false})
+  // const Marker = dynamic(async ()=> (await import('react-leaflet')).Marker, {ssr: false})
+  // const Popup = dynamic(async ()=> (await import('react-leaflet')).Popup, {ssr: false})
+  // const TileLayer = dynamic(async ()=> (await import('react-leaflet')).TileLayer, {ssr: false})
   return (
+    <ClientOnly>
       <MapContainer
         center={(location as LatLngTuple) || [51.505, -0.09]}
         zoom={zoom || 13}
@@ -46,6 +48,7 @@ const Map = ({ location, className, zoom, children }: Props) => {
         </Marker>
         {children}
       </MapContainer>
+    </ClientOnly>
   )
 }
 

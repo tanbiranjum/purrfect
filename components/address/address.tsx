@@ -1,8 +1,9 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
+import dynamic from "next/dynamic"
 
-import Map from "../map/map"
+import ClientOnly from "../client-only"
 import {
   FormControl,
   FormField,
@@ -23,6 +24,7 @@ type Props = {
 }
 
 const BASE_URL = "https://nominatim.openstreetmap.org/search?"
+const DynamicMap = dynamic(() => import("../map/map"), { ssr: false })
 
 const Address = ({
   form,
@@ -31,7 +33,7 @@ const Address = ({
   label,
   placeholder,
   searchText,
-  validAddress
+  validAddress,
 }: Props) => {
   const [location, setLocation] = useState([51.505, -0.09])
   const [addresses, setAddresses] = useState([])
@@ -39,29 +41,28 @@ const Address = ({
   const [selectedAddress, setSelectedAddress] = useState({
     address: searchText,
     lat: -1,
-    lon: -1
+    lon: -1,
   })
   const [selected, setSelected] = useState(false)
 
   useEffect(() => {
     // check if the address valid
-    if(selectedAddress.lat === -1 && selectedAddress.lon === -1) {
+    if (selectedAddress.lat === -1 && selectedAddress.lon === -1) {
       validAddress && validAddress(false)
-    }
-    else {
+    } else {
       validAddress && validAddress(true)
     }
     const getLocation = setTimeout(() => {
-      if(searchText !== selectedAddress.address) {
+      if (searchText !== selectedAddress.address) {
         const params = {
           q: searchText,
           format: "json",
           addressdetails: "1",
           polygon_geojson: "0",
         }
-  
+
         const queryString = new URLSearchParams(params).toString()
-  
+
         fetch(`${BASE_URL}${queryString}`)
           .then((response) => response.text())
           .then((result) => {
@@ -80,7 +81,7 @@ const Address = ({
     setSelectedAddress({
       address: address.display_name,
       lat: address.lat * 1,
-      lon: address.lon * 1
+      lon: address.lon * 1,
     })
     form.setValue("address", address.display_name)
     form.setValue("lat", address.lat * 1)
@@ -92,23 +93,23 @@ const Address = ({
   return (
     <div>
       <div className="relative">
-      <FormField
-            control={form.control}
-            name={name}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{label}</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder={placeholder}
-                    {...field}
-                    autoComplete="off"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name={name}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{label}</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder={placeholder}
+                  {...field}
+                  autoComplete="off"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         {suggestionDisplay && (
           <div className="absolute left-0 top-full z-50 rounded-lg">
             {addresses?.map((address: any) => (
@@ -124,7 +125,9 @@ const Address = ({
       </div>
       {includeMap && (
         <div className="mt-6">
-          <Map location={location} />
+          <ClientOnly>
+            <DynamicMap location={location} />
+          </ClientOnly>
         </div>
       )}
     </div>
