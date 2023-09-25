@@ -28,6 +28,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "../ui/menubar"
+import { Separator } from "../ui/separator"
 
 interface SiteHeaderProps {
   currentUser?: User | null
@@ -89,17 +90,31 @@ export function SiteHeader({ currentUser }: SiteHeaderProps) {
                     {currentUser ? (
                       <>
                         <MenubarItem>
+                          <Link href="/adoption">Adoption</Link>
+                        </MenubarItem>
+                        <MenubarItem>
+                          <Link href="/post-adoption">Post Adoption</Link>
+                        </MenubarItem>
+                        <MenubarItem>
                           <Link href="/adoption/status">Adoption Status</Link>
                         </MenubarItem>
                         <MenubarItem onClick={() => {}}>
                           Adoption History
                         </MenubarItem>
+                        <Separator />
                         <MenubarItem onClick={() => signOut()}>
                           Logout
                         </MenubarItem>
                       </>
                     ) : (
                       <>
+                        <MenubarItem>
+                          <Link href="/adoption">Adoption</Link>
+                        </MenubarItem>
+                        <MenubarItem>
+                          <Link href="/post-adoption">Post Adoption</Link>
+                        </MenubarItem>
+                        <Separator />
                         <MenubarItem onClick={() => useLogin.open()}>
                           Login
                         </MenubarItem>
